@@ -1,21 +1,26 @@
 <template>
-  <nav>
-    <div class="row">
-      <h3 class="col text-start">Dinelemma</h3>
-
-      <div class="col">
-        <router-link to="/">Home</router-link> |
-        <router-link to="/about">About</router-link> |
-        <router-link to="/signin">Sign In</router-link> |
-      </div>
-      <div class="col"></div>
-    </div>
-
-  </nav>
+  <NavBar />
   <div class="container">
     <router-view />
   </div>
 </template>
+
+<script>
+import axios from 'axios'
+import NavBar from './components/NavBar.vue'
+
+export default {
+  name: 'App',
+  components: {
+    NavBar
+  },
+  async created() {
+    const response = await axios.get('users/current_user')
+    // set user state to Current_user upon creating App
+    this.$store.dispatch('user', response.data)
+  }
+}
+</script>
 
 <style lang="scss">
 #app {
@@ -28,18 +33,5 @@
 
 .container {
   min-height: 90vh;
-}
-
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: $pink3;
-
-    &.router-link-exact-active {
-      color: $pink1;
-    }
-  }
 }
 </style>
