@@ -1,6 +1,7 @@
 <template>
   <div class="border p-4 bg-light col-6">
-    <form class="h-100 d-flex flex-column justify-content-center">
+    <form class="h-100 d-flex flex-column justify-content-center" @submit.prevent="handleSubmit">
+      <ErrorAlert v-if="error" :error="error" />
       <h1 class="mb-3">Login</h1>
       <div class="text-center mb-3">New to Dinelemma?<router-link to="/signup">Sign up today</router-link>.</div>
       <div class="mb-3">
@@ -21,12 +22,55 @@
 </template>
 
 <script>
+import axios from 'axios'
+import ErrorAlert from './ErrorAlert.vue'
+
 export default {
   name: 'SigninForm',
   data() {
     return {
       email: '',
-      password: ''
+      password: '',
+      error: ''
+    }
+  },
+  components: {
+    ErrorAlert
+  },
+  methods: {
+    async handleSubmit() {
+      try {
+
+        const response = await axios.post('users/sign_in', {
+          user: {
+            email: this.email,
+            password: this.password
+          }
+        });
+        // store jwt in localStorage
+        localStorage.setItem('Authorization', response.headers.authorization);
+
+        // save current_user information in state
+        await this.storeCurrentUser();
+
+        // redirect to home page as logged in user
+        await this.$router.push('/');
+
+      } catch (error) {
+        console.error('An error occurred while logging in:', error)
+        this.error = 'Invalid username/password'
+      }
+    },
+    async storeCurrentUser() {
+      try {
+        // Fetch the current user information
+        const loginResponse = await axios.get('users/current_user');
+        // Store the user information in your Vuex store
+        this.$store.dispatch('user', loginResponse.data);
+      } catch (error) {
+        console.error('An error occurred while fetching current user:', error);
+        // Handle error conditions here
+      }
     }
   }
 }

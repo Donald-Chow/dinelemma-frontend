@@ -1,6 +1,7 @@
 <template>
   <div class="border p-4 bg-light col-6">
-    <form class="h-100 d-flex flex-column justify-content-center">
+    <form class="h-100 d-flex flex-column justify-content-center" @click.prevent="handleSubmit">
+      <ErrorAlert v-if="error" :error="error" />
       <h1 class="mb-3">Sign up now!</h1>
       <div class="text-center mb-3">No credit card required!.</div>
       <div class="mb-3">
@@ -21,12 +22,36 @@
 </template>
 
 <script>
+import axios from 'axios'
+import ErrorAlert from './ErrorAlert.vue'
+
 export default {
   name: 'SigninForm',
   data() {
     return {
       email: '',
-      password: ''
+      password: '',
+      error: ''
+    }
+  },
+  components: {
+    ErrorAlert
+  },
+  methods: {
+    async handleSubmit() {
+      try {
+        const response = await axios.post('users', {
+          user: {
+            email: this.email,
+            password: this.password
+          }
+        });
+        console.log(response);
+        localStorage.setItem('Authorization', response.headers.authorization);
+        this.$router.push('/');
+      } catch (error) {
+        this.error = "Something went wrong while registering"
+      }
     }
   }
 }
