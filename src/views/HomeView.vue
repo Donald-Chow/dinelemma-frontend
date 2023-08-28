@@ -1,18 +1,28 @@
 <template>
-  <div class="home">
+  <div class="home" v-if="!user">
     <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1> Do you have a Dinelemma?</h1>
+    <h2> 3 easy step to decide on a place to eat</h2>
+    <ol>
+      <li>Add your friends to a group</li>
+      <li>Select restaurant options</li>
+      <li>Swipe until there is a match!</li>
+    </ol>
   </div>
+  <DashboardView v-if="user" />
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import { mapGetters } from 'vuex'
+import DashboardView from './DashboardView.vue'
 
 export default {
   name: 'HomeView',
   components: {
-    HelloWorld
+    DashboardView
+  },
+  computed: {
+    ...mapGetters(['user'])
   }
 }
 </script>
