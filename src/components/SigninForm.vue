@@ -48,7 +48,7 @@ export default {
           }
         });
         // store jwt in localStorage
-        localStorage.setItem('Authorization', response.headers.authorization);
+        await localStorage.setItem('Authorization', response.headers.authorization);
 
         // save current_user information in state
         await this.storeCurrentUser();

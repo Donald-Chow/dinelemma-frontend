@@ -1,18 +1,10 @@
 <template>
   <nav>
     <div class="row">
-      <h3 class="col text-start">Dinelemma</h3>
-
-      <div class="col">
-        <router-link to="/">Home</router-link> |
-        <router-link to="/about">About</router-link> |
-        <router-link to="/signin">Sign In</router-link> |
-      </div>
-      <div class="col">
-        <h4 v-if="!user">Hi User</h4>
-        <h4 v-if="user">Welcome Back {{ user.email }}</h4>
-      </div>
-      <div class="btn btn-primary" @click="logUser">Log User</div>
+      <router-link to="/" class="col">Home</router-link> |
+      <router-link to="/about" class="col">About</router-link> |
+      <router-link to="/signin" class="col" v-if="!user">Sign In</router-link>
+      <a @click="handleLogout" class="col" v-if="user">Sign Out</a>
     </div>
   </nav>
 </template>
@@ -24,20 +16,30 @@ export default {
   name: 'NavBar',
   computed: {
     ...mapGetters(['user'])
+  },
+  methods: {
+    handleLogout() {
+      localStorage.removeItem('Authorization');
+      this.$store.dispatch('user', null)
+      this.$router.push('/')
+    }
   }
 }
 </script>
 
 <style lang="scss">
 nav {
-  padding: 30px;
+  background-color: $main1;
+  padding: 16px;
+  position: sticky;
+  bottom: 0px;
 
   a {
     font-weight: bold;
-    color: $pink3;
+    color: $main3;
 
     &.router-link-exact-active {
-      color: $pink1;
+      color: $main0;
     }
   }
 }
