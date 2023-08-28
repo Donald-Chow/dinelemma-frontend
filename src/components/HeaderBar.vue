@@ -11,7 +11,7 @@
       </div>
       <div class="col">
         <h6 v-if="!user">Hi User</h6>
-        <h6 v-if="user">Welcome Back {{ user.email }}</h6>
+        <h6 v-if="user">Welcome Back {{ user.name }}</h6>
       </div>
     </div>
   </header>
