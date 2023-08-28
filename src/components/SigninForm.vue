@@ -1,5 +1,5 @@
 <template>
-  <div class="border p-4 bg-light col-6">
+  <div class="border p-4 bg-light">
     <form class="h-100 d-flex flex-column justify-content-center" @submit.prevent="handleSubmit">
       <ErrorAlert v-if="error" :error="error" />
       <h1 class="mb-3">Login</h1>
@@ -11,8 +11,8 @@
         <input type="password" class="form-control" v-model="password" placeholder="Password">
       </div>
       <div class="d-flex justify-content-end mb-3">
-
-        <router-link to="/forget">Forgot Password?</router-link>
+        <a href="" aria-disabled="true">Forgot Password?</a>
+        <!-- <router-link to="/forget">Forgot Password?</router-link> -->
       </div>
       <div class="d-grid">
         <button type="submit" class="btn btn-primary btn-lg">Submit</button>
