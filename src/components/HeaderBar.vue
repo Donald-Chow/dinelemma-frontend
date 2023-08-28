@@ -1,11 +1,13 @@
 <template>
   <header>
     <div class="row">
-      <div class="col d-flex align-item-center">
-        <img
-          src="https://cdn.discordapp.com/attachments/1112292984747204731/1143184403984568352/daforcez_logo_for_an_app_use_2_colors_only_use_ED7277_and_EAD2C_bea522cc-368c-4148-9da9-70dc115440f9.png"
-          alt="">
-        <h3 class="text-start ps-2 mb-0">Dinelemma</h3>
+      <div class="col">
+        <router-link to="/" class="d-flex align-items-center">
+          <img
+            src="https://cdn.discordapp.com/attachments/1112292984747204731/1143184403984568352/daforcez_logo_for_an_app_use_2_colors_only_use_ED7277_and_EAD2C_bea522cc-368c-4148-9da9-70dc115440f9.png"
+            alt="">
+          <h3 class="text-start ps-2 mb-0">Dinelemma</h3>
+        </router-link>
       </div>
       <div class="col">
         <h6 v-if="!user">Hi User</h6>
@@ -29,6 +31,10 @@ export default {
 <style scoped lang="scss">
 h6 {
   margin: 0px;
+}
+
+h3 {
+  color: $dark-gray;
 }
 
 header {
