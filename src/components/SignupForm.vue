@@ -1,5 +1,5 @@
 <template>
-  <div class="border p-4 bg-light col-6">
+  <div class="border p-4 bg-light">
     <form class="h-100 d-flex flex-column justify-content-center" @click.prevent="handleSubmit">
       <ErrorAlert v-if="error" :error="error" />
       <h1 class="mb-3">Sign up now!</h1>

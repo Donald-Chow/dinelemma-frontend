@@ -1,8 +1,7 @@
 <template>
   <div class="signup">
-
-    <div class="row">
-      <div class="col-6 d-flex flex-column justify-content-around">
+    <div class="d-flex justify-content-center py-3">
+      <div class="d-flex flex-column justify-content-around">
         <div class="d-flex">
           <img
             src="https://cdn.discordapp.com/attachments/1112292984747204731/1143184403984568352/daforcez_logo_for_an_app_use_2_colors_only_use_ED7277_and_EAD2C_bea522cc-368c-4148-9da9-70dc115440f9.png"
@@ -11,8 +10,8 @@
         </div>
         <h5>Decide on where to eat immediately</h5>
       </div>
-      <SignupForm />
     </div>
+    <SignupForm />
   </div>
 </template>
 
