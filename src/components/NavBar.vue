@@ -1,8 +1,8 @@
 <template>
   <nav>
     <div class="row" v-if="user">
-      <router-link to="/groups" class="col"><i class="fa-solid fa-users-line"></i></router-link> |
       <router-link to="/lists" class="col"><i class="fa-solid fa-burger"></i></router-link> |
+      <router-link to="/groups" class="col"><i class="fa-solid fa-users-line"></i></router-link> |
       <router-link to="/Profile" class="col"><i class="fa-solid fa-user"></i></router-link>
     </div>
     <div class="row" v-if="!user">

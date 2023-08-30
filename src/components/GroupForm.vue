@@ -9,18 +9,23 @@
       <div class="modal-body">
 
         <div class="mb-3">
-          <label for="name" class="form-label" required>Group Name</label>
+          <label for="name" class="form-label" required>
+            <h3>Group Name</h3>
+          </label>
           <input type="text" class="form-control" id="name" v-model="groupName" aria-describedby="inputGroupPrepend2"
             required>
         </div>
 
-        <div class="form-check form-check-reverse" v-for="user in users" :key="user.id">
-          <input class="form-check-input" type="checkbox" v-model="selectedUsers" :value="user.id"
-            :id="'userCheckbox' + user.id">
-          <label class="form-check-label" :for="'userCheckbox' + user.id">
-            {{ user.name }}
-          </label>
+        <div class="user-list" v-for="user in users" :key="user.id">
+          <div class="form-check form-check-reverse text-center">
+            <input class="form-check-input" type="checkbox" v-model="selectedUsers" :value="user.id"
+              :id="'userCheckbox' + user.id">
+            <label class="form-check-label" :for="'userCheckbox' + user.id">
+              <i class="fa-solid fa-user-tie"></i> {{ user.name }}
+            </label>
+          </div>
         </div>
+
       </div>
 
       <div class="modal-footer">
@@ -59,3 +64,15 @@ export default {
   }
 }
 </script>
+
+<style scoped lang="scss">
+.user-list {
+  height: 80px;
+  background-color: $main2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 18px;
+  padding: 0px 8px 0px 8px
+}
+</style>

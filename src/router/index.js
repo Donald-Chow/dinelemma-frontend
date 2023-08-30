@@ -36,7 +36,7 @@ const routes = [
     path: '/groups/:id',
     name: 'GroupDetails',
     props: true,
-    component: () => import('../views/GroupList.vue')
+    component: () => import('../views/GroupDetails.vue')
   },
   {
     path: '/about',
