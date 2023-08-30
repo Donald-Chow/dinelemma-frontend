@@ -33,6 +33,12 @@ const routes = [
     component: () => import('../views/GroupList.vue')
   },
   {
+    path: '/groups/:id',
+    name: 'GroupDetails',
+    props: true,
+    component: () => import('../views/GroupList.vue')
+  },
+  {
     path: '/about',
     name: 'about',
     // route level code-splitting
