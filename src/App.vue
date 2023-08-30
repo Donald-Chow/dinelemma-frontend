@@ -1,10 +1,34 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <HeaderBar />
+  <div class="container">
+    <router-view />
+  </div>
+  <NavBar />
 </template>
+
+<script>
+import axios from 'axios'
+import NavBar from './components/NavBar.vue'
+import HeaderBar from './components/HeaderBar.vue'
+
+export default {
+  name: 'App',
+  components: {
+    NavBar,
+    HeaderBar
+  },
+  async created() {
+    try {
+      const response = await axios.get('users/current_user')
+      // set user state to Current_user upon creating App
+      console.log(response);
+      this.$store.dispatch('user', response.data)
+    } catch (error) {
+      console.error('An error occurred while logging in:', error);
+    }
+  }
+}
+</script>
 
 <style lang="scss">
 #app {
@@ -15,16 +39,7 @@
   color: #2c3e50;
 }
 
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+.container {
+  min-height: 90vh;
 }
 </style>
