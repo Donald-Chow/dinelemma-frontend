@@ -1,12 +1,13 @@
 <template>
   <nav>
-    <div class="row">
-      <router-link to="/about" class="col"><i class="fa-solid fa-users-line"></i></router-link> |
-      <router-link to="/about" class="col"><i class="fa-solid fa-burger"></i></router-link> |
+    <div class="row" v-if="user">
+      <router-link to="/groups" class="col"><i class="fa-solid fa-users-line"></i></router-link> |
+      <router-link to="/lists" class="col"><i class="fa-solid fa-burger"></i></router-link> |
+      <router-link to="/Profile" class="col"><i class="fa-solid fa-user"></i></router-link>
+    </div>
+    <div class="row" v-if="!user">
       <router-link to="/" class="col"><i class="fa-solid fa-house"></i></router-link> |
-      <router-link to="/signin" class="col" v-if="!user">Sign In</router-link>
-      <router-link to="/Profile" class="col" v-if="user"><i class="fa-solid fa-user"></i></router-link>
-
+      <router-link to="/signin" class="col"><i class="fa-solid fa-arrow-right-to-bracket"></i></router-link>
     </div>
   </nav>
 </template>

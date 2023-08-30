@@ -1,29 +1,36 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import SigninView from '../views/SigninView.vue'
-import SignupView from '../views/SignupView.vue'
-import ProfileView from '../views/ProfileView.vue'
+
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: () => import('../views/HomeView.vue')
   },
   {
     path: '/signin',
     name: 'SigninView',
-    component: SigninView
+    component: () => import('../views/SigninView.vue')
   },
   {
     path: '/signup',
     name: 'SignupView',
-    component: SignupView
+    component: () => import('../views/SignupView.vue')
   },
   {
     path: '/profile',
     name: 'ProfileView',
-    component: ProfileView
+    component: () => import('../views/ProfileView.vue')
+  },
+  {
+    path: '/lists',
+    name: 'RestaurantList',
+    component: () => import('../views/RestaurantList.vue')
+  },
+  {
+    path: '/groups',
+    name: 'GroupList',
+    component: () => import('../views/GroupList.vue')
   },
   {
     path: '/about',
