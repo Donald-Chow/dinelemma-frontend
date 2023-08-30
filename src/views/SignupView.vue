@@ -12,6 +12,12 @@
       </div>
     </div>
     <SignupForm />
+    <div class="mt-2">
+      Already have an account?
+      <router-link to="/signin" class="col">
+        <div class="btn btn-primary">Log in</div>
+      </router-link>
+    </div>
   </div>
 </template>
 
