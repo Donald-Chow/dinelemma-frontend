@@ -48,6 +48,8 @@ export default {
         });
         console.log(response);
         localStorage.setItem('Authorization', response.headers.authorization);
+        axios.defaults.headers.common['Authorization'] = localStorage.getItem('Authorization');
+
         this.$router.push('/');
       } catch (error) {
         this.error = "Something went wrong while registering"

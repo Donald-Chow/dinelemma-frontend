@@ -41,6 +41,8 @@ export default {
     async handleSubmit() {
       try {
         await localStorage.removeItem('Authorization')
+        axios.defaults.headers.common['Authorization'] = localStorage.getItem('Authorization');
+
         const response = await axios.post('users/sign_in', {
           user: {
             email: this.email,
@@ -49,6 +51,7 @@ export default {
         });
         // store jwt in localStorage
         await localStorage.setItem('Authorization', response.headers.authorization);
+        axios.defaults.headers.common['Authorization'] = localStorage.getItem('Authorization');
         // save current_user information in state
         this.$store.dispatch('user', response.data.status.data.user);
         // await this.storeCurrentUser();
