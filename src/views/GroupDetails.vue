@@ -1,7 +1,7 @@
 <template>
   <div v-if="activeSession">
     <h1>There is an active session</h1>
-    <div>{{ activeSession }}</div>
+    <VotingSession :activeSession="activeSession" />
   </div>
 
   <div v-if="!activeSession">
@@ -47,10 +47,14 @@
 
 <script>
 import axios from 'axios'
+import VotingSession from '@/components/VotingSession.vue'
 
 export default {
   name: 'GroupDetails',
   props: ['id'],
+  components: {
+    VotingSession
+  },
   data() {
     return {
       group: {},
@@ -61,7 +65,7 @@ export default {
       selectedList: ''
     }
   },
-  mounted() {
+  created() {
     this.fetchGroupDetails();
   },
   methods: {
@@ -69,9 +73,9 @@ export default {
       try {
         const response = await axios.get(`groups/${this.id}`);
         console.log(response);
+        this.activeSession = response.data.active_session
         this.group = response.data.group;
         this.members = response.data.members
-        this.activeSession = response.data.active_session
         this.lists = response.data.lists
         this.history = response.data.history
       } catch (error) {
