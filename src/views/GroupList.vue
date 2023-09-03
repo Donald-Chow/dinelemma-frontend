@@ -20,12 +20,7 @@
   </div>
 
   <!-- Modal -->
-  <div class="modal fade" id="newGroupForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="newGroupFormLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <GroupForm :users="users" />
-    </div>
-  </div>
+  <GroupForm :users="users" />
 </template>
 
 <script>
@@ -52,7 +47,7 @@ export default {
     async getGroups() {
       try {
         const response = await axios.get('groups')
-        console.log(response);
+        // console.log(response);
         this.groups = response.data.groups
         this.users = response.data.users
       } catch (error) {
