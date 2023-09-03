@@ -33,6 +33,15 @@
         {{ member.name }}
       </h3>
     </div>
+    <h2>History</h2>
+    <div v-for="vote_session in history" :key="'vote_session' + vote_session.id">
+      <h3>
+        {{ vote_session.name }}
+      </h3>
+      <h3>
+        {{ vote_session.restaurant.name }}
+      </h3>
+    </div>
   </div>
 </template>
 
@@ -48,6 +57,7 @@ export default {
       members: [],
       activeSession: {},
       lists: [],
+      history: [],
       selectedList: ''
     }
   },
@@ -58,10 +68,12 @@ export default {
     async fetchGroupDetails() {
       try {
         const response = await axios.get(`groups/${this.id}`);
+        console.log(response);
         this.group = response.data.group;
         this.members = response.data.members
         this.activeSession = response.data.active_session
         this.lists = response.data.lists
+        this.history = response.data.history
       } catch (error) {
         console.error('Error fetching group data:', error);
       }
