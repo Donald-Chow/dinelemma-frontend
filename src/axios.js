@@ -11,6 +11,7 @@ axios.interceptors.response.use(
     // if the signature expire, ask the use to sign in again
     if (error.response.data == 'Signature has expired') {
       window.alert('Your session has expired')
+      localStorage.removeItem('Authorization')
       router.push({ name: 'SigninView'});
     }
     return Promise.reject(error); // Reject the promise to propagate the error

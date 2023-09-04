@@ -27,8 +27,9 @@ export default {
 nav {
   background-color: $main1;
   padding: 16px;
-  position: sticky;
-  bottom: 0px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 
   a {
     font-weight: bold;

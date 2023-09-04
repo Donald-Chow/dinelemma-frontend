@@ -1,19 +1,31 @@
 <template>
   <div>
-    <h1>Voting Session</h1>
-    <h3>{{ activeSession }}</h3>
+    <h1>Voting Session {{ activeSession.id }}</h1>
   </div>
-  <div v-for="vote in votes" :key="vote.id">
-    {{ vote.restaurant.name }}
+
+  <div if="votes">
+    <div v-for="vote in votes" :key="vote.id" class="vote-wrapper">
+      <div class="vote-card">
+        <VotingCard :vote="vote" />
+      </div>
+    </div>
+  </div>
+
+  <div if="!votes">
+    <h2>Voting Completed!</h2>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import VotingCard from '@/components/VotingCard.vue';
 
 export default {
   name: 'VotingSession',
   props: ['activeSession'],
+  components: {
+    VotingCard
+  },
   data() {
     return {
       votes: []
@@ -40,3 +52,13 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.vote-wrapper {
+  position: relative;
+}
+
+.vote-card {
+  position: absolute;
+}
+</style>

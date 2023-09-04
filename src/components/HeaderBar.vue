@@ -42,6 +42,7 @@ header {
   padding: 16px 16px 8px 16px;
   position: sticky;
   top: 0px;
+  z-index: 99;
 }
 
 img {

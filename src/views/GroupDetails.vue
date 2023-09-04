@@ -1,6 +1,5 @@
 <template>
   <div v-if="activeSession">
-    <h1>There is an active session</h1>
     <VotingSession :activeSession="activeSession" />
   </div>
 
