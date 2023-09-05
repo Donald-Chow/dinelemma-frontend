@@ -23,13 +23,13 @@
 
   <h2 @click="toggleMemberExpand"><span v-if="!memberExpand"><i class="fa-solid fa-angle-right"></i></span> <span
       v-if="memberExpand"><i class="fa-solid fa-angle-down"></i></span>Members ({{ members.length }})</h2>
-  <div v-for="member in   members  " :key="'member' + member.id" :class="{ 'd-none': !memberExpand }">
+  <div v-for="member in   members  " :key="'member' + member.id" :class="{ 'd-none': !memberExpand, 'card': true }">
     <h3>
       <i class="fa-solid fa-circle-user"></i> {{ member.username }}
     </h3>
   </div>
   <h2>History</h2>
-  <div v-for="  vote_session   in   history  " :key="'vote_session' + vote_session.id">
+  <div v-for="  vote_session   in   history  " :key="'vote_session' + vote_session.id" class="card">
     <router-link :to="{ name: 'VoteSessionDetail', params: { id: vote_session.id } }">
       <h3>
         <i class="fa-solid fa-utensils"></i> {{ vote_session.name }}
@@ -44,6 +44,7 @@
 
 <script>
 import axios from 'axios'
+import { createConsumer } from '@rails/actioncable'
 
 export default {
   name: 'GroupDetails',
@@ -58,8 +59,9 @@ export default {
       memberExpand: false
     }
   },
-  mounted() {
-    this.fetchGroupDetails();
+  async mounted() {
+    await this.fetchGroupDetails();
+    this.subscribeToChannel();
   },
   methods: {
     async fetchGroupDetails() {
@@ -77,6 +79,24 @@ export default {
       } catch (error) {
         console.error('Error fetching group data:', error);
       }
+    },
+    async subscribeToChannel() {
+      console.log(this.group.id);
+      const cable = createConsumer('ws://localhost:3000/cable')
+      cable.subscriptions.create(
+        { channel: "GroupChannel", id: this.group.id },
+        {
+          received: (data) => {
+            console.log(data);
+            if (data.message === "Session Started")
+              this.$router.push({ name: 'VoteSessionDetail', params: { id: data.vote_session.id } });
+          },
+          connected: () => { console.log(`Subscribed to the Group with the id ${this.group.id}.`) },
+          disconnected: () => {
+            console.log('WebSocket disconnected');
+          }
+        }
+      )
     },
     async createSession() {
       const data = {
