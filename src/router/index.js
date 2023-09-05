@@ -39,6 +39,12 @@ const routes = [
     component: () => import('../views/GroupDetails.vue')
   },
   {
+    path: '/vote_sessions/:id',
+    name: 'VoteSessionDetail',
+    props: true,
+    component: () => import('../views/VotingSession.vue')
+  },
+  {
     path: '/about',
     name: 'about',
     // route level code-splitting
