@@ -19,6 +19,7 @@
 <script>
 import axios from 'axios';
 import VotingCard from '@/components/VotingCard.vue';
+import { createConsumer } from '@rails/actioncable';
 
 export default {
   name: 'VotingSession',
@@ -33,20 +34,47 @@ export default {
   },
   mounted() {
     this.getVotes()
-  }, watch: {
-    activeSession: 'getVotes'
+    this.subscribeToChannel
+  },
+  watch: {
+    activeSession: {
+      handler: function () {
+        this.getVotes();
+        this.subscribeToChannel();
+      },
+      immediate: true
+    },
   },
   methods: {
+    async subscribeToChannel() {
+      if (this.activeSession.id) {
+
+        const cable = createConsumer('ws://localhost:3000/cable')
+        cable.subscriptions.create(
+          { channel: "VoteSessionChannel", id: this.activeSession.id },
+          {
+            received: (data) => {
+              console.log(data);
+            },
+            connected: () => { console.log(`Subscribed to the voteSession with the id ${this.activeSession.id}.`) },
+            disconnected: () => {
+              console.log('WebSocket disconnected');
+            }
+          }
+        )
+      }
+    },
     async getVotes() {
-      try {
-        if (this.activeSession) {
-          console.log(this.activeSession.id);
-          const response = await axios.get(`vote_sessions/${this.activeSession.id}`)
-          console.log(response);
-          this.votes = response.data.votes
+      if (this.activeSession.id) {
+
+        try {
+          if (this.activeSession) {
+            const response = await axios.get(`vote_sessions/${this.activeSession.id}`)
+            this.votes = response.data.votes
+          }
+        } catch (error) {
+          console.error('An error occurred while fetching votes:', error);
         }
-      } catch (error) {
-        console.error('An error occurred while fetching votes:', error);
       }
     }
   }
