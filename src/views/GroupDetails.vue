@@ -1,11 +1,9 @@
 <template>
   <div>
-
-    <h1>Group</h1>
-    <h2>name: {{ group.name }}</h2>
+    <h1>Group name: {{ group.name }}</h1>
   </div>
 
-  <div>
+  <div class="card">
     <h2>Start a Session</h2>
     <form @submit.prevent="createSession">
       <label for="restaurantList" class="form-label">Select a List:</label>
@@ -56,13 +54,20 @@ export default {
       lists: [],
       history: [],
       selectedList: '',
-      memberExpand: false
+      memberExpand: false,
+      connection: null
     }
   },
   async mounted() {
     await this.fetchGroupDetails();
     this.subscribeToChannel();
   },
+  // beforeRouteLeave() {
+  //   if (this.connection) {
+  //     console.log("Trigger Route Leave");
+  //     this.connection.unsubscribe()
+  //   }
+  // },
   methods: {
     async fetchGroupDetails() {
       try {
@@ -70,8 +75,6 @@ export default {
         if (response.data.active_session) {
           this.$router.push({ name: 'VoteSessionDetail', params: { id: response.data.active_session.id } });
         }
-
-        console.log(response);
         this.group = response.data.group;
         this.members = response.data.members
         this.lists = response.data.lists
@@ -81,14 +84,14 @@ export default {
       }
     },
     async subscribeToChannel() {
-      console.log(this.group.id);
       const cable = createConsumer('ws://localhost:3000/cable')
-      cable.subscriptions.create(
+      this.connection = cable.subscriptions.create(
         { channel: "GroupChannel", id: this.group.id },
         {
           received: (data) => {
             console.log(data);
             if (data.message === "Session Started")
+              // start animation
               this.$router.push({ name: 'VoteSessionDetail', params: { id: data.vote_session.id } });
           },
           connected: () => { console.log(`Subscribed to the Group with the id ${this.group.id}.`) },
