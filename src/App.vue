@@ -21,7 +21,6 @@ export default {
     try {
       const response = await axios.get('users/current_user')
       // set user state to Current_user upon creating App
-      console.log(response);
       this.$store.dispatch('user', response.data)
     } catch (error) {
       console.error('An error occurred while logging in:', error);
@@ -40,6 +39,6 @@ export default {
 }
 
 .container {
-  min-height: 90vh;
+  min-height: 85vh;
 }
 </style>

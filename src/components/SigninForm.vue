@@ -40,6 +40,8 @@ export default {
   methods: {
     async handleSubmit() {
       try {
+        await localStorage.removeItem('Authorization')
+        axios.defaults.headers.common['Authorization'] = localStorage.getItem('Authorization');
 
         const response = await axios.post('users/sign_in', {
           user: {
@@ -49,9 +51,10 @@ export default {
         });
         // store jwt in localStorage
         await localStorage.setItem('Authorization', response.headers.authorization);
-
+        axios.defaults.headers.common['Authorization'] = localStorage.getItem('Authorization');
         // save current_user information in state
-        await this.storeCurrentUser();
+        this.$store.dispatch('user', response.data.status.data.user);
+        // await this.storeCurrentUser();
 
         // redirect to home page as logged in user
         await this.$router.push('/');
@@ -61,17 +64,17 @@ export default {
         this.error = 'Invalid username/password'
       }
     },
-    async storeCurrentUser() {
-      try {
-        // Fetch the current user information
-        const loginResponse = await axios.get('users/current_user');
-        // Store the user information in your Vuex store
-        this.$store.dispatch('user', loginResponse.data);
-      } catch (error) {
-        console.error('An error occurred while fetching current user:', error);
-        // Handle error conditions here
-      }
-    }
+    // async storeCurrentUser() {
+    //   try {
+    //     // Fetch the current user information
+    //     const loginResponse = await axios.get('users/current_user');
+    //     // Store the user information in your Vuex store
+    //     this.$store.dispatch('user', loginResponse.data);
+    //   } catch (error) {
+    //     console.error('An error occurred while fetching current user:', error);
+    //     // Handle error conditions here
+    //   }
+    // }
   }
 }
 </script>

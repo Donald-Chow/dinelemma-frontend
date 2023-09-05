@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -20,6 +21,8 @@ export default {
   methods: {
     async handleLogout() {
       await localStorage.removeItem('Authorization');
+      axios.defaults.headers.common['Authorization'] = localStorage.getItem('Authorization');
+
       await this.$store.dispatch('user', null)
       this.$router.push('/')
     }
