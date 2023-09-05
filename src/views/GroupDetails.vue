@@ -24,14 +24,14 @@
   <h2>Members</h2>
   <div v-for="member in members" :key="'member' + member.id">
     <h3>
-      {{ member.name }}
+      <i class="fa-solid fa-circle-user"></i> {{ member.name }}
     </h3>
   </div>
   <h2>History</h2>
   <div v-for="vote_session in history" :key="'vote_session' + vote_session.id">
     <router-link :to="{ name: 'VoteSessionDetail', params: { id: vote_session.id } }">
       <h3>
-        {{ vote_session.name }}
+        <i class="fa-solid fa-utensils"></i> {{ vote_session.name }}
       </h3>
     </router-link>
 
