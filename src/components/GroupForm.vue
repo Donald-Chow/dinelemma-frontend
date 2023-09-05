@@ -24,7 +24,7 @@
                 <input class="form-check-input" type="checkbox" v-model="selectedUsers" :value="user.id"
                   :id="'userCheckbox' + user.id">
                 <label class="form-check-label" :for="'userCheckbox' + user.id">
-                  <i class="fa-solid fa-user-tie"></i> {{ user.name }}
+                  <i class="fa-solid fa-user-tie"></i> {{ user.username }}
                 </label>
               </div>
             </div>

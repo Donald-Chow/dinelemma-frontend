@@ -1,7 +1,6 @@
 <template>
   <div v-if="user">
     <h1>Profile!</h1>
-    <h2>Name: {{ user.name }}</h2>
     <h2>Username: {{ user.username }}</h2>
     <h2>Email: {{ user.email }}</h2>
     <button @click="handleLogout" class="btn btn-primary btn-lg">Log out! <i
