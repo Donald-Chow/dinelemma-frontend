@@ -11,7 +11,10 @@
       </div>
       <div class="col">
         <h6 v-if="!user">Hi User</h6>
-        <h6 v-if="user">Welcome Back {{ user.name }}</h6>
+        <div v-if="user">
+          <h6> Welcome Back</h6>
+          <h6> {{ user.username }}</h6>
+        </div>
       </div>
     </div>
   </header>

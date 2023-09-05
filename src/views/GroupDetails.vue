@@ -21,14 +21,15 @@
     </form>
   </div>
 
-  <h2>Members</h2>
-  <div v-for="member in members" :key="'member' + member.id">
+  <h2 @click="toggleMemberExpand"><span v-if="!memberExpand"><i class="fa-solid fa-angle-right"></i></span> <span
+      v-if="memberExpand"><i class="fa-solid fa-angle-down"></i></span>Members ({{ members.length }})</h2>
+  <div v-for="member in   members  " :key="'member' + member.id" :class="{ 'd-none': !memberExpand }">
     <h3>
-      <i class="fa-solid fa-circle-user"></i> {{ member.name }}
+      <i class="fa-solid fa-circle-user"></i> {{ member.username }}
     </h3>
   </div>
   <h2>History</h2>
-  <div v-for="vote_session in history" :key="'vote_session' + vote_session.id">
+  <div v-for="  vote_session   in   history  " :key="'vote_session' + vote_session.id">
     <router-link :to="{ name: 'VoteSessionDetail', params: { id: vote_session.id } }">
       <h3>
         <i class="fa-solid fa-utensils"></i> {{ vote_session.name }}
@@ -53,7 +54,8 @@ export default {
       members: [],
       lists: [],
       history: [],
-      selectedList: ''
+      selectedList: '',
+      memberExpand: false
     }
   },
   mounted() {
@@ -90,6 +92,9 @@ export default {
       } catch (error) {
         console.error('Error creating group:', error);
       }
+    },
+    toggleMemberExpand() {
+      this.memberExpand = !this.memberExpand
     }
   }
 }
