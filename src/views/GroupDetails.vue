@@ -55,19 +55,20 @@ export default {
       history: [],
       selectedList: '',
       memberExpand: false,
-      connection: null
+      channel: null
     }
   },
   async mounted() {
     await this.fetchGroupDetails();
     this.subscribeToChannel();
   },
-  // beforeRouteLeave() {
-  //   if (this.connection) {
-  //     console.log("Trigger Route Leave");
-  //     this.connection.unsubscribe()
-  //   }
-  // },
+  beforeRouteLeave() {
+    if (this.channel) {
+      console.log("Trigger Route Leave");
+
+      this.channel.unsubscribe()
+    }
+  },
   methods: {
     async fetchGroupDetails() {
       try {
@@ -85,7 +86,7 @@ export default {
     },
     async subscribeToChannel() {
       const cable = createConsumer('ws://localhost:3000/cable')
-      this.connection = cable.subscriptions.create(
+      this.channel = cable.subscriptions.create(
         { channel: "GroupChannel", id: this.group.id },
         {
           received: (data) => {
