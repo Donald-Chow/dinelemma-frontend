@@ -23,17 +23,17 @@
     </div>
   </div>
 
-  <DashboardView v-if="user" />
+  <GroupList v-if="user" />
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import DashboardView from './DashboardView.vue'
+import GroupList from './GroupList.vue'
 
 export default {
   name: 'HomeView',
   components: {
-    DashboardView
+    GroupList
   },
   computed: {
     ...mapGetters(['user'])

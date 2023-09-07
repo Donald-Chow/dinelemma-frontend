@@ -10,8 +10,9 @@
 
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img src="https://cdn.midjourney.com/fbcaa719-5074-4910-a3d7-29c557926cc4/0_2.png" class="d-block w-100"
-          alt="...">
+        <img
+          :src="'http://source.unsplash.com/featured/?' + vote.restaurant.category + '&food&' + Math.floor(Math.random() * 1000)"
+          class="d-block w-100" alt="...">
         <div class="carousel-caption d-md-block">
           <h5>{{ vote.restaurant.name }}</h5>
           <p>Category: {{ vote.restaurant.category }}</p>
@@ -19,8 +20,9 @@
       </div>
 
       <div class="carousel-item">
-        <img src="https://cdn.midjourney.com/d4ff1b1c-226e-4417-9dad-df45903c3336/0_1.webp" class="d-block w-100"
-          alt="...">
+        <img
+          :src="'http://source.unsplash.com/featured/?' + vote.restaurant.category + '&food&' + Math.floor(Math.random() * 1000)"
+          class="d-block w-100" alt="...">
         <div class="carousel-caption d-md-block">
           <h5>{{ vote.restaurant.name }}</h5>
           <p>Some representative placeholder content for the second slide.Some representative placeholder content for
@@ -29,8 +31,9 @@
       </div>
 
       <div class="carousel-item">
-        <img src="https://cdn.midjourney.com/aee61842-f92a-4402-8d33-60b1ef1f60c8/0_2_384_N.webp" class="d-block w-100"
-          alt="...">
+        <img
+          :src="'http://source.unsplash.com/featured/?' + vote.restaurant.category + '&food&' + Math.floor(Math.random() * 1000)"
+          class="d-block w-100" alt="...">
         <div class="carousel-caption d-md-block">
           <h5>{{ vote.restaurant.name }}</h5>
           <p>Some representative placeholder content for the third slide.Some representative placeholder content for the
@@ -74,6 +77,7 @@ export default {
           }
         })
         console.log('Vote success:', response);
+        this.$emit('remove-vote', this.vote)
         document.getElementById(`voting-card${this.vote.id}`).classList.add('fade-out')
       } catch (error) {
         console.error(error)
