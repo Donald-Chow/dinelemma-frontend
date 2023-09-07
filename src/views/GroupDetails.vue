@@ -65,7 +65,6 @@ export default {
   beforeRouteLeave() {
     if (this.channel) {
       console.log("Trigger Route Leave");
-
       this.channel.unsubscribe()
     }
   },
@@ -90,7 +89,6 @@ export default {
         { channel: "GroupChannel", id: this.group.id },
         {
           received: (data) => {
-            console.log(data);
             if (data.message === "Session Started")
               // start animation
               this.$router.push({ name: 'VoteSessionDetail', params: { id: data.vote_session.id } });
@@ -107,11 +105,8 @@ export default {
         group_id: this.id,
         restaurant_list_id: this.selectedList
       };
-      console.log(data);
       try {
         const response = await axios.post('vote_sessions', data);
-        console.log('Session created:', response.data);
-        console.log(response.data.active_session)
         this.activeSession = response.data.active_session
       } catch (error) {
         console.error('Error creating group:', error);
