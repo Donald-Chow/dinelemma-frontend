@@ -17,3 +17,17 @@ axios.interceptors.response.use(
     return Promise.reject(error); // Reject the promise to propagate the error
   }
 );
+
+const googleMapsApi = axios.create({
+  baseURL: '/maps-api/maps/api/place/textsearch/json',
+  params: {
+    key: process.env.VUE_APP_GOOGLE_API_KEY,
+  },
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': ''
+  },
+
+});
+
+export default googleMapsApi;
