@@ -17,23 +17,30 @@
             v-for="index in restaurant.price_level" :key="index"><i class="fa-solid fa-yen-sign"></i></span>
         </p>
       </div>
+      <div v-if="listShow" class="restaurant-list">
+        <RestaurantList :restaurant="restaurant" :lists="lists" />
+      </div>
       <div>
-        <button class="btn btn-primary">+</button>
+        <button class="btn btn-primary" @click="this.listShow = !this.listShow">+</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import RestaurantList from './RestaurantList.vue';
+
 export default {
   name: 'RestaurantCard',
-  props: ['restaurant'],
+  props: ['restaurant', 'lists'],
   data() {
     return {
       googleApiKey: process.env.VUE_APP_GOOGLE_API_KEY,
-      category: this.restaurant.types[0].charAt(0).toUpperCase() + this.restaurant.types[0].slice(1)
-    }
-  }
+      category: this.restaurant.types[0].charAt(0).toUpperCase() + this.restaurant.types[0].slice(1),
+      listShow: false
+    };
+  },
+  components: { RestaurantList }
 }
 </script>
 
@@ -43,6 +50,8 @@ export default {
   padding: 8px;
   margin-bottom: 8px;
   border-radius: 8px;
+  position: relative;
+  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.15);
 
   img {
     width: 100%;
@@ -52,6 +61,18 @@ export default {
     border-radius: 8px;
     margin-bottom: 8px;
     box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.15);
+  }
+
+  .restaurant-list {
+    position: absolute;
+    top: 360px;
+    right: 10px;
+    background-color: white;
+    padding: 8px;
+    width: 250px;
+    max-height: 400px;
+    overflow-y: scroll;
+    z-index: 1;
   }
 }
 </style>

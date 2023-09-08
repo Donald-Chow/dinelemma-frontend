@@ -4,10 +4,11 @@
     <input type="text" v-model="query" class="rounded">
     <button type="submit" class="rounded">Search</button>
   </form>
-  <RestaurantCard v-for="restaurant in  results " :key="restaurant.place_id" :restaurant="restaurant" />
+  <RestaurantCard v-for="restaurant in  results " :key="restaurant.place_id" :restaurant="restaurant" :lists="lists" />
 </template>
 
 <script >
+import axios from 'axios'
 import googleMapsApi from '@/axios.js';
 import RestaurantCard from '@/components/RestaurantCard.vue';
 
@@ -16,8 +17,12 @@ export default {
   data() {
     return {
       query: '',
-      results: []
+      results: [],
+      lists: []
     }
+  },
+  mounted() {
+    this.fetchLists()
   },
   components: {
     RestaurantCard
@@ -31,6 +36,10 @@ export default {
         },
       })
       this.results = response.data.results
+    },
+    async fetchLists() {
+      const response = await axios.get('restaurant_lists')
+      this.lists = response.data.lists
     }
   }
 }
