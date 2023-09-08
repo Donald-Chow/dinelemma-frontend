@@ -7,5 +7,16 @@ module.exports = defineConfig({
         additionalData: `@import "@/assets/stylesheets/application.scss";`
       },
     },
-  }
+  },
+  devServer: {
+    proxy: {
+      '/maps-api': {
+        target: 'https://maps.googleapis.com',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/maps-api': '',
+        },
+      },
+    },
+  },
 })
