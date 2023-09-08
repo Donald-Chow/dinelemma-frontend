@@ -5,7 +5,7 @@ axios.defaults.baseURL = 'http://localhost:3000/';
 axios.defaults.headers.common['Authorization'] = localStorage.getItem('Authorization');
 axios.interceptors.response.use(
   function (response) {
-    return response; // Don't forget to return the response
+    return response;
   },
   function (error) {
     // if the signature expire, ask the use to sign in again
@@ -14,10 +14,11 @@ axios.interceptors.response.use(
       localStorage.removeItem('Authorization')
       router.push({ name: 'SigninView'});
     }
-    return Promise.reject(error); // Reject the promise to propagate the error
+    return Promise.reject(error);
   }
 );
 
+// axios instance for calling google map api
 const googleMapsApi = axios.create({
   baseURL: '/maps-api/maps/api/place/textsearch/json',
   params: {
