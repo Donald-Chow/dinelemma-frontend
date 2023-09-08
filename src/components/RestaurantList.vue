@@ -1,32 +1,80 @@
 <template>
   <div>
     Restaurant Lists
-    <div v-for="restaurant in restaurant_list" :key="'restaurant_' + restaurant.name"
-      class="d-flex justify-content-around align-items-center bg-white">
+    <div class="d-flex w-100 border-bottom">
+      <input class="m-0 p-2 text-start bg-white" v-model="newListName" placeholder="New list" required />
+      <button @click="createAndAddToList(newListName)">Create</button>
+    </div>
+    <div v-for=" list in lists" :key="list.name" class="bg-white border-bottom" @click="addToList(list)">
       <div>
-        <h2>{{ restaurant.name }}</h2>
-        <p>{{ restaurant.address }}</p>
-      </div>
-      <div class="d-flex flex-column ">
-        <div class="btn btn-primary">+</div>
-        <div class="btn btn-primary">-</div>
+        <h2 class="m-0 p-2 text-start">{{ list.name }}</h2>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 
 export default {
   name: 'RestaurantList',
-  components: {
-
-  },
+  props: ['restaurant', 'lists'],
   data() {
     return {
-      restaurant_list: [{ name: "foo", address: "bar" }, { name: "Hello", address: "world" }],
-
+      list: [],
+      newListName: ''
+    }
+  },
+  methods: {
+    async createAndAddToList() {
+      const response = await axios.post('restaurant_lists', {
+        name: this.newListName
+      })
+      this.addToList(response.data.list)
+    },
+    async addToList(list) {
+      console.log(list);
+      console.log(this.restaurant);
+      const response = await axios.post('list_bookmarks', {
+        list_bookmark: { restaurant_list_id: list.id },
+        restaurant: this.restaurant
+      })
+      console.log(response);
     }
   }
 }
 </script>
+
+<style scoped lang="scss">
+input {
+  padding: 0px;
+  background-color: inherit;
+  border: 0px;
+  font-family: "Raleway";
+  font-weight: 700;
+  font-size: calc(1.325rem + 0.9vw);
+  line-height: 1.2;
+  color: #2c3e50;
+  width: 100%;
+
+  &:focus {
+    border: 3px solid #555;
+    width: 750%
+  }
+}
+
+button {
+  // position: absolute;
+  // left: -9999px;
+  background-color: $main1;
+  border: none;
+  width: 25%
+}
+
+// input:focus+button {
+// position: static;
+/* Bring the button back into the layout */
+// left: auto;
+/* Reset the position */
+// }
+</style>
