@@ -63,18 +63,7 @@ export default {
         console.error('An error occurred while logging in:', error)
         this.error = 'Invalid username/password'
       }
-    },
-    // async storeCurrentUser() {
-    //   try {
-    //     // Fetch the current user information
-    //     const loginResponse = await axios.get('users/current_user');
-    //     // Store the user information in your Vuex store
-    //     this.$store.dispatch('user', loginResponse.data);
-    //   } catch (error) {
-    //     console.error('An error occurred while fetching current user:', error);
-    //     // Handle error conditions here
-    //   }
-    // }
+    }
   }
 }
 </script>
