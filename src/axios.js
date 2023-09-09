@@ -3,7 +3,7 @@ import router from '@/router'
 
 axios.defaults.baseURL =
   process.env.NODE_ENV === 'production'
-  ? 'https://your-heroku-app.herokuapp.com/'
+  ? 'https://dinelemma-backend-8c6da2f0be62.herokuapp.com/'
   : 'http://localhost:3000/';
 
 axios.defaults.headers.common['Authorization'] = localStorage.getItem('Authorization');
