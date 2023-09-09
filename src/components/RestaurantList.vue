@@ -5,7 +5,7 @@
       <input class="m-0 p-2 text-start bg-white" v-model="newListName" placeholder="New list" required />
       <button @click="createAndAddToList(newListName)">Create</button>
     </div>
-    <div v-for=" list in lists" :key="list.name" class="bg-white border-bottom" @click="addToList(list)">
+    <div v-for=" list in localLists" :key="list.name" class="bg-white border-bottom" @click="addToList(list)">
       <div>
         <h2 class="m-0 p-2 text-start">{{ list.name }}</h2>
       </div>
@@ -21,16 +21,23 @@ export default {
   props: ['restaurant', 'lists'],
   data() {
     return {
-      list: [],
+      localLists: this.lists,
       newListName: ''
     }
   },
   methods: {
     async createAndAddToList() {
-      const response = await axios.post('restaurant_lists', {
-        name: this.newListName
-      })
-      this.addToList(response.data.list)
+      try {
+
+        const response = await axios.post('restaurant_lists', {
+          name: this.newListName
+        })
+        this.addToList(response.data.list)
+        this.localLists.unshift(response.data.list)
+        this.resetList()
+      } catch (error) {
+        console.error('Error creating and adding to the list:', error);
+      }
     },
     async addToList(list) {
       console.log(list);
@@ -40,6 +47,11 @@ export default {
         restaurant: this.restaurant
       })
       console.log(response);
+    },
+    resetList() {
+      // alert
+      this.newListName = ''
+      this.$emit('closeList')
     }
   }
 }
