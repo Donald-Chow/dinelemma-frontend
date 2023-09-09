@@ -40,6 +40,7 @@ export default {
     GroupCard,
     GroupForm
   },
+  emits: ['alert', 'notice'],
   created() {
     this.getGroups();
   },
