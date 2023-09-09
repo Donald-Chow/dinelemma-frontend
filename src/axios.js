@@ -1,11 +1,16 @@
 import axios from 'axios'
 import router from '@/router'
 
-axios.defaults.baseURL = 'http://localhost:3000/';
+axios.defaults.baseURL =
+  process.env.NODE_ENV === 'production'
+  ? 'https://your-heroku-app.herokuapp.com/'
+  : 'http://localhost:3000/';
+
 axios.defaults.headers.common['Authorization'] = localStorage.getItem('Authorization');
+
 axios.interceptors.response.use(
   function (response) {
-    return response; // Don't forget to return the response
+    return response;
   },
   function (error) {
     // if the signature expire, ask the use to sign in again
@@ -14,6 +19,6 @@ axios.interceptors.response.use(
       localStorage.removeItem('Authorization')
       router.push({ name: 'SigninView'});
     }
-    return Promise.reject(error); // Reject the promise to propagate the error
+    return Promise.reject(error);
   }
 );

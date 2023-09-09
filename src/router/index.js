@@ -24,8 +24,8 @@ const routes = [
   },
   {
     path: '/lists',
-    name: 'RestaurantList',
-    component: () => import('../views/RestaurantList.vue')
+    name: 'ExploreRestaurant',
+    component: () => import('../views/ExploreRestaurant.vue')
   },
   {
     path: '/groups',

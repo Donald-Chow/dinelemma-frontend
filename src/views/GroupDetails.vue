@@ -57,7 +57,7 @@ export default {
       memberExpand: false,
       channel: null
     }
-  },
+  }, emits: ['alert', 'notice'],
   async mounted() {
     await this.fetchGroupDetails();
     this.subscribeToChannel();

@@ -20,7 +20,7 @@
   </div>
 
   <!-- Modal -->
-  <GroupForm :users="users" />
+  <GroupForm :users="users" @notice="emitNotice" />
 </template>
 
 <script>
@@ -40,6 +40,7 @@ export default {
     GroupCard,
     GroupForm
   },
+  emits: ['alert', 'notice'],
   created() {
     this.getGroups();
   },
@@ -54,11 +55,8 @@ export default {
         console.error('An error occurred while fetching groups:', error);
       }
     },
-    showNewForm() {
-
-    },
-    createGroup() {
-
+    emitNotice(message) {
+      this.$emit('notice', message)
     }
   }
 }
