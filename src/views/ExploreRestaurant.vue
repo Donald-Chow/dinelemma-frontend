@@ -10,7 +10,7 @@
 
 <script >
 import axios from 'axios'
-import googleMapsApi from '@/axios.js';
+import googleMapsApi from '@/google-map-api';
 import RestaurantCard from '@/components/RestaurantCard.vue';
 
 export default {
@@ -28,6 +28,7 @@ export default {
   components: {
     RestaurantCard
   },
+  emits: ['alert', 'notice'],
   methods: {
     async handleSearch() {
       console.log("searching");
