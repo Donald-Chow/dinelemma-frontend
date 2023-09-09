@@ -1,8 +1,13 @@
 import axios from 'axios'
 import router from '@/router'
 
-axios.defaults.baseURL = 'http://localhost:3000/';
+axios.defaults.baseURL =
+  process.env.NODE_ENV === 'production'
+  ? 'https://your-heroku-app.herokuapp.com/'
+  : 'http://localhost:3000/';
+
 axios.defaults.headers.common['Authorization'] = localStorage.getItem('Authorization');
+
 axios.interceptors.response.use(
   function (response) {
     return response;
@@ -17,18 +22,3 @@ axios.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-// axios instance for calling google map api
-const googleMapsApi = axios.create({
-  baseURL: '/maps-api/maps/api/place/textsearch/json',
-  params: {
-    key: process.env.VUE_APP_GOOGLE_API_KEY,
-  },
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': ''
-  },
-
-});
-
-export default googleMapsApi;
