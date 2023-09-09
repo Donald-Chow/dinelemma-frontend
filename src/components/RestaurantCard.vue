@@ -18,7 +18,7 @@
         </p>
       </div>
       <div v-if="listShow" class="restaurant-list">
-        <RestaurantList :restaurant="restaurant" :lists="lists" @closeList="listShow = false" />
+        <RestaurantList :restaurant="restaurant" :lists="lists" @closeList="listShow = false" @notice="emitNotice" />
       </div>
       <div>
         <button class="btn btn-primary" @click="this.listShow = !this.listShow">+</button>
@@ -33,6 +33,7 @@ import RestaurantList from './RestaurantList.vue';
 export default {
   name: 'RestaurantCard',
   props: ['restaurant', 'lists'],
+  components: { RestaurantList },
   data() {
     return {
       googleApiKey: process.env.VUE_APP_GOOGLE_API_KEY,
@@ -40,7 +41,11 @@ export default {
       listShow: false
     };
   },
-  components: { RestaurantList }
+  methods: {
+    emitNotice(message) {
+      this.$emit('notice', message)
+    }
+  }
 }
 </script>
 

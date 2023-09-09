@@ -33,6 +33,7 @@ export default {
           name: this.newListName
         })
         this.addToList(response.data.list)
+        this.$emit('notice', `Created list: "${this.newListName}"`)
         this.localLists.unshift(response.data.list)
         this.resetList()
       } catch (error) {

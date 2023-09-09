@@ -4,7 +4,8 @@
     <input type="text" v-model="query" class="rounded">
     <button type="submit" class="rounded">Search</button>
   </form>
-  <RestaurantCard v-for="restaurant in  results " :key="restaurant.place_id" :restaurant="restaurant" :lists="lists" />
+  <RestaurantCard v-for="restaurant in  results " :key="restaurant.place_id" :restaurant="restaurant" :lists="lists"
+    @notice="emitNotice" />
 </template>
 
 <script >
@@ -40,6 +41,9 @@ export default {
     async fetchLists() {
       const response = await axios.get('restaurant_lists')
       this.lists = response.data.lists
+    },
+    emitNotice(message) {
+      this.$emit('notice', message)
     }
   }
 }
