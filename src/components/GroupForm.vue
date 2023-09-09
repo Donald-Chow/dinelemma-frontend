@@ -70,6 +70,7 @@ export default {
         if (backdrops) {
           backdrops.forEach(backdrop => { backdrop.remove(); })
         }
+        this.$emit('notice', "Group Created")
         this.$router.push({ name: 'GroupDetails', params: { id: response.data.group.id } });
       } catch (error) {
         console.error('Error creating group:', error);

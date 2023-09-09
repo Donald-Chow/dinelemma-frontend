@@ -20,7 +20,7 @@
   </div>
 
   <!-- Modal -->
-  <GroupForm :users="users" />
+  <GroupForm :users="users" @notice="emitNotice" />
 </template>
 
 <script>
@@ -54,11 +54,8 @@ export default {
         console.error('An error occurred while fetching groups:', error);
       }
     },
-    showNewForm() {
-
-    },
-    createGroup() {
-
+    emitNotice(message) {
+      this.$emit('notice', message)
     }
   }
 }
