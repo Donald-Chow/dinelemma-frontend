@@ -35,6 +35,7 @@ export default {
   components: {
     GroupList
   },
+  emits: ['alert', 'notice'],
   computed: {
     ...mapGetters(['user'])
   }
