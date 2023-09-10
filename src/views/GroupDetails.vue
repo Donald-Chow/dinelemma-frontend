@@ -85,7 +85,7 @@ export default {
     },
     async subscribeToChannel() {
       const url = process.env.NODE_ENV === 'production'
-        ? 'ws://dinelemma-backend-8c6da2f0be62.herokuapp.com/cable'
+        ? 'wss://dinelemma-backend-8c6da2f0be62.herokuapp.com/cable'
         : 'ws://localhost:3000/cable';
       const cable = createConsumer(url)
       this.channel = cable.subscriptions.create(

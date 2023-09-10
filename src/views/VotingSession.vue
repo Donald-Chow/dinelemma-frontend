@@ -21,6 +21,9 @@
     <!-- <img
       :src="'https://source.unsplash.com/featured/?' + restaurant.category + '&food&' + Math.floor(Math.random() * 1000)"
       alt="" class="w-100"> -->
+    <img
+      :src="'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1080&photo_reference=' + photo.photo_reference + '&key=' + googleApiKey"
+      class="d-block w-100">
     <img :src="restaurant.photos[0].getUrl({ maxWidth: 1080, maxHeight: 1080 })" alt="">
   </div>
 </template>
@@ -40,7 +43,8 @@ export default {
     return {
       session: {},
       restaurant: {},
-      votes: []
+      votes: [],
+      googleApiKey: process.env.VUE_APP_GOOGLE_API_KEY
     }
   },
   async mounted() {
@@ -64,7 +68,7 @@ export default {
     async subscribeToChannel() {
       if (!this.session.restaurant) {
         const url = process.env.NODE_ENV === 'production'
-          ? 'ws://dinelemma-backend-8c6da2f0be62.herokuapp.com/cable'
+          ? 'wss://dinelemma-backend-8c6da2f0be62.herokuapp.com/cable'
           : 'ws://localhost:3000/cable';
         const cable = createConsumer(url)
         cable.subscriptions.create(
