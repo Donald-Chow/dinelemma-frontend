@@ -15,7 +15,10 @@
       src="https://kit.fontawesome.com/0928576c99.js"
       crossorigin="anonymous"
     ></script>
-
+    <script
+      async
+      src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.VUE_APP_GOOGLE_API_KEY %>&libraries=places&callback=initMap"
+    ></script>
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
   <body>

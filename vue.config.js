@@ -8,7 +8,7 @@ module.exports = defineConfig({
       },
     },
   },
-  devServer: {
+/*  devServer: {
     proxy: {
       '/maps-api': {
         target: 'https://maps.googleapis.com',
@@ -18,5 +18,11 @@ module.exports = defineConfig({
         },
       },
     },
+  }, */
+  chainWebpack: (config) => {
+    config.plugin('define').tap((args) => {
+      args[0]['process.env'].VUE_APP_GOOGLE_MAPS_API_KEY = JSON.stringify(process.env.VUE_APP_GOOGLE_MAPS_API_KEY);
+      return args;
+    });
   },
 })

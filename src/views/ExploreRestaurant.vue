@@ -6,11 +6,11 @@
   </form>
   <RestaurantCard v-for="restaurant in  results " :key="restaurant.place_id" :restaurant="restaurant" :lists="lists"
     @notice="emitNotice" />
+  <div id="google"></div>
 </template>
 
 <script >
 import axios from 'axios'
-import googleMapsApi from '@/google-map-api';
 import RestaurantCard from '@/components/RestaurantCard.vue';
 
 export default {
@@ -32,12 +32,22 @@ export default {
   methods: {
     async handleSearch() {
       console.log("searching");
-      const response = await googleMapsApi.get('', {
-        params: {
-          query: this.query,
-        },
+      const request = {
+        query: this.query,
+        fields: ['name', 'formatted_address', 'photos', 'rating', 'user_ratings_total', 'price_level', 'types', 'place_id']
+      }
+      // eslint-disable-next-line no-undef
+      const placesService = new google.maps.places.PlacesService(document.getElementById('google'))
+
+      placesService.textSearch(request, (results, status) => {
+        // eslint-disable-next-line no-undef
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          console.log(results);
+          this.results = results
+        } else {
+          console.error('Places search failed with status:', status);
+        }
       })
-      this.results = response.data.results
     },
     async fetchLists() {
       const response = await axios.get('restaurant_lists')
