@@ -10,9 +10,11 @@
     <div class="carousel-inner">
       <div v-for="(photo, index) in vote.restaurant.photos.slice(0, 5)" :key="index"
         :class="['carousel-item', { 'active': index === activePhotoIndex }]">
-        <img
+        <!-- <img
           :src="'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1080&photo_reference=' + photo.photo_reference + '&key=' + googleApiKey"
-          class="d-block w-100">
+          class="d-block w-100"> -->
+        <img :src="photos[0].getUrl({ maxWidth: 1080, maxHeight: 1080 })" alt="">
+
         <div class="img-filter"></div>
         <div class="carousel-caption d-md-block">
           <h5>{{ vote.restaurant.name }}</h5>
@@ -59,7 +61,7 @@ export default {
   },
   data() {
     return {
-      googleApiKey: process.env.VUE_APP_GOOGLE_API_KEY,
+      // googleApiKey: process.env.VUE_APP_GOOGLE_API_KEY,
       activePhotoIndex: 0
     }
   },
