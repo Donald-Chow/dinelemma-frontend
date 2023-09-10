@@ -4,7 +4,7 @@
       :src="'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=' + restaurant.photos[0].photo_reference + '&key=' + googleApiKey"
       alt="" v-if="restaurant.photos"> -->
     <img :src="restaurant.photos[0].getUrl({ maxWidth: 1080, maxHeight: 1080 })" alt="" v-if="restaurant.photos">
-    <img :src="'http://source.unsplash.com/featured/?' + restaurant.name + Math.floor(Math.random() * 1000)" alt=""
+    <img :src="'https://source.unsplash.com/featured/?' + restaurant.name + Math.floor(Math.random() * 1000)" alt=""
       v-if="!restaurant.photos">
     <div class="d-flex justify-content-between mb-3">
       <div class="flex-grow-1 me-2">

@@ -18,9 +18,10 @@
       <div class="btn btn-warning">BACK</div>
     </router-link>
     <h3>Chosen Restaurant: <strong>{{ restaurant.name }}</strong></h3>
-    <img
-      :src="'http://source.unsplash.com/featured/?' + restaurant.category + '&food&' + Math.floor(Math.random() * 1000)"
-      alt="" class="w-100">
+    <!-- <img
+      :src="'https://source.unsplash.com/featured/?' + restaurant.category + '&food&' + Math.floor(Math.random() * 1000)"
+      alt="" class="w-100"> -->
+    <img :src="restaurant.photos[0].getUrl({ maxWidth: 1080, maxHeight: 1080 })" alt="">
   </div>
 </template>
 
@@ -62,8 +63,10 @@ export default {
     },
     async subscribeToChannel() {
       if (!this.session.restaurant) {
-
-        const cable = createConsumer('ws://localhost:3000/cable')
+        const url = process.env.NODE_ENV === 'production'
+          ? 'ws://dinelemma-backend-8c6da2f0be62.herokuapp.com/cable'
+          : 'ws://localhost:3000/cable';
+        const cable = createConsumer(url)
         cable.subscriptions.create(
           { channel: "VoteSessionChannel", id: this.session.id },
           {
