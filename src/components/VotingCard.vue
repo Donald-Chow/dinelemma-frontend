@@ -13,8 +13,7 @@
         <!-- <img
           :src="'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1080&photo_reference=' + photo.photo_reference + '&key=' + googleApiKey"
           class="d-block w-100"> -->
-        <img :src="photos[0].getUrl({ maxWidth: 1080, maxHeight: 1080 })" alt="">
-
+        <img :src="photo.getUrl({ maxWidth: 1080, maxHeight: 1080 })" alt="">
         <div class="img-filter"></div>
         <div class="carousel-caption d-md-block">
           <h5>{{ vote.restaurant.name }}</h5>
