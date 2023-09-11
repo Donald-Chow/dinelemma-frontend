@@ -18,13 +18,13 @@
       <div class="btn btn-warning">BACK</div>
     </router-link>
     <h3>Chosen Restaurant: <strong>{{ restaurant.name }}</strong></h3>
-    <!-- <img
-      :src="'https://source.unsplash.com/featured/?' + restaurant.category + '&food&' + Math.floor(Math.random() * 1000)"
-      alt="" class="w-100"> -->
     <img
-      :src="'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1080&photo_reference=' + photo.photo_reference + '&key=' + googleApiKey"
-      class="d-block w-100">
-    <img :src="restaurant.photos[0].getUrl({ maxWidth: 1080, maxHeight: 1080 })" alt="">
+      :src="'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1080&photo_reference=' + restaurant.photos[0].photo_reference + '&key=' + googleApiKey"
+      class="d-block w-100" v-if="restaurant.photos.length != 0">
+    <img
+      :src="'https://source.unsplash.com/featured/?' + restaurant.category + '&food&' + Math.floor(Math.random() * 1000)"
+      alt="" class="w-100" v-else>
+    <!-- <img :src="restaurant.photos[0].getUrl({ maxWidth: 1080, maxHeight: 1080 })" alt=""> -->
   </div>
 </template>
 
@@ -61,6 +61,7 @@ export default {
           this.restaurant = this.session.restaurant
         }
         this.votes = response.data.votes
+        console.log(this.votes);
       } catch (error) {
         console.error('An error occurred while fetching session:', error);
       }
