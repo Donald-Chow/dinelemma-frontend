@@ -31,7 +31,6 @@ export default {
   emits: ['alert', 'notice'],
   methods: {
     async handleSearch() {
-      console.log("searching");
       const request = {
         query: this.query,
         fields: ['name', 'formatted_address', 'photos', 'rating', 'user_ratings_total', 'price_level', 'types', 'place_id']
