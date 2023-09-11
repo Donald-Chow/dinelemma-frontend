@@ -1,32 +1,64 @@
 <template>
-  <div class="voting-card carousel slide" data-bs-ride="false">
+  <div class="voting-card carousel slide">
 
     <div class="carousel-indicators">
-      <button v-for="(photo, index) in vote.restaurant.photos.slice(0, 5)" :key="index" type="button"
-        :class="{ 'active': index === activePhotoIndex }" :aria-current="{ 'true': index === activePhotoIndex }"
-        :aria-label="'Slide ' + index" @click="setPhoto(index)"></button>
+      <div v-if="photosUrls.length != 0">
+        <button v-for="(photo, index) in photosUrls" :key="index" type="button"
+          :class="{ 'active': index === activePhotoIndex }" :aria-current="{ 'true': index === activePhotoIndex }"
+          :aria-label="'Slide ' + index" @click="setPhoto(index)"></button>
+      </div>
+      <div v-else>
+        <button type="button" class='active' aria-current='true' aria-label='Slide'></button>
+      </div>
     </div>
 
     <div class="carousel-inner">
-      <div v-for="(photo, index) in vote.restaurant.photos.slice(0, 5)" :key="index"
-        :class="['carousel-item', { 'active': index === activePhotoIndex }]">
-        <img
-          :src="'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1080&photo_reference=' + photo.photo_reference + '&key=' + googleApiKey"
-          class="d-block w-100">
-        <div class="img-filter"></div>
-        <div class="carousel-caption d-md-block">
-          <h5>{{ vote.restaurant.name }}</h5>
-          <p v-if="vote.restaurant.category">Category: {{ vote.restaurant.category }}</p>
-          <p class="m-0 text-start">Rating: {{ vote.restaurant.rating }} <span
-              v-for="index in Math.floor(vote.restaurant.rating)" :key="index"><i
-                class="fa-solid fa-star"></i></span><span
-              v-if="(vote.restaurant.rating - Math.floor(vote.restaurant.rating)) >= 0.5"><i
-                class="fa-solid fa-star-half-stroke"></i></span><span
-              v-for="index in (5 - Math.round(vote.restaurant.rating))" :key="index"><i
-                class="fa-regular fa-star"></i></span>({{ vote.restaurant.user_ratings_total }})</p>
-          <p class="m-0 text-start">{{ vote.restaurant.types[0] }} <span v-if="vote.restaurant.price_level">- </span><span
-              v-for="index in vote.restaurant.price_level" :key="index"><i class="fa-solid fa-yen-sign"></i></span>
-          </p>
+      <div v-if="photosUrls.length != 0">
+        <div v-for="(photo, index) in photosUrls" :key="index"
+          :class="['carousel-item', { 'active': index === activePhotoIndex }]">
+          <!-- <img
+            :src="'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1080&photo_reference=' + photo.photo_reference + '&key=' + googleApiKey"
+            class="d-block w-100"> -->
+          <img :src="photo" class="d-block w-100" :alt="'photo-slide' + index">
+          <div class="img-filter"></div>
+          <div class="carousel-caption d-md-block">
+            <h5>{{ vote.restaurant.name }}</h5>
+            <p v-if="vote.restaurant.category">Category: {{ vote.restaurant.category }}</p>
+            <p class="m-0 text-start">Rating: {{ vote.restaurant.rating }} <span
+                v-for="index in Math.floor(vote.restaurant.rating)" :key="index"><i
+                  class="fa-solid fa-star"></i></span><span
+                v-if="(vote.restaurant.rating - Math.floor(vote.restaurant.rating)) >= 0.5"><i
+                  class="fa-solid fa-star-half-stroke"></i></span><span
+                v-for="index in (5 - Math.round(vote.restaurant.rating))" :key="index"><i
+                  class="fa-regular fa-star"></i></span>({{ vote.restaurant.user_ratings_total }})</p>
+            <p class="m-0 text-start">{{ vote.restaurant.types[0] }} <span v-if="vote.restaurant.price_level">-
+              </span><span v-for="index in vote.restaurant.price_level" :key="index"><i
+                  class="fa-solid fa-yen-sign"></i></span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div v-else>
+        <div class="carousel-item active">
+          <img
+            :src="'https://source.unsplash.com/featured/?' + vote.restaurant.category + '&' + Math.floor(Math.random() * 1000)"
+            class="d-block w-100">
+          <div class="img-filter"></div>
+          <div class="carousel-caption d-md-block">
+            <h5>{{ vote.restaurant.name }}</h5>
+            <p v-if="vote.restaurant.category">Category: {{ vote.restaurant.category }}</p>
+            <p class="m-0 text-start">Rating: {{ vote.restaurant.rating }} <span
+                v-for="index in Math.floor(vote.restaurant.rating)" :key="index"><i
+                  class="fa-solid fa-star"></i></span><span
+                v-if="(vote.restaurant.rating - Math.floor(vote.restaurant.rating)) >= 0.5"><i
+                  class="fa-solid fa-star-half-stroke"></i></span><span
+                v-for="index in (5 - Math.round(vote.restaurant.rating))" :key="index"><i
+                  class="fa-regular fa-star"></i></span>({{ vote.restaurant.user_ratings_total }})</p>
+            <p class="m-0 text-start">{{ vote.restaurant.types[0] }} <span v-if="vote.restaurant.price_level">-
+              </span><span v-for="index in vote.restaurant.price_level" :key="index"><i
+                  class="fa-solid fa-yen-sign"></i></span>
+            </p>
+          </div>
         </div>
       </div>
 
@@ -46,6 +78,7 @@
         <button class='btn btn-lg btn-outline-success' @click.prevent="handleVote(0)">Yes</button>
       </div>
     </div>
+    <div id="google"></div>
   </div>
 </template>
 
@@ -57,13 +90,39 @@ export default {
   props: {
     vote: {}
   },
+  mounted() {
+    this.getPhotosUrls()
+  },
   data() {
     return {
-      googleApiKey: process.env.VUE_APP_GOOGLE_API_KEY,
-      activePhotoIndex: 0
+      // googleApiKey: process.env.VUE_APP_GOOGLE_API_KEY,
+      activePhotoIndex: 0,
+      photosUrls: []
     }
   },
   methods: {
+    getPhotosUrls() {
+      const request = {
+        placeId: this.vote.restaurant.place_id,
+        fields: ['photo']
+      };
+      // eslint-disable-next-line no-undef
+      const placesService = new google.maps.places.PlacesService(document.getElementById('google'))
+      placesService.getDetails(request, (results, status) => {
+        // eslint-disable-next-line no-undef
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          if (results.photos) {
+            console.log(results.photos.slice(0, 5));
+            this.photosUrls = results.photos.slice(0, 5).map(photo => {
+              return photo.getUrl({ maxWidth: 1080, maxHeight: 1080 })
+            })
+            console.log(this.photosUrls);
+          }
+        } else {
+          console.error('Places search failed with status:', status);
+        }
+      });
+    },
     async handleVote(result) {
       try {
         const response = await axios.patch(`votes/${this.vote.id}`, {

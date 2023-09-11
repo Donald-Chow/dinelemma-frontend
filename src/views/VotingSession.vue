@@ -18,14 +18,14 @@
       <div class="btn btn-warning">BACK</div>
     </router-link>
     <h3>Chosen Restaurant: <strong>{{ restaurant.name }}</strong></h3>
-    <!-- <img
-      :src="'https://source.unsplash.com/featured/?' + restaurant.category + '&food&' + Math.floor(Math.random() * 1000)"
-      alt="" class="w-100"> -->
+    <img :src="restaurantImageURL" class="d-block w-100" v-if="restaurantImageURL">
     <img
-      :src="'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1080&photo_reference=' + photo.photo_reference + '&key=' + googleApiKey"
-      class="d-block w-100">
-    <img :src="restaurant.photos[0].getUrl({ maxWidth: 1080, maxHeight: 1080 })" alt="">
+      :src="'https://source.unsplash.com/featured/?' + restaurant.category + '&food&' + Math.floor(Math.random() * 1000)"
+      alt="" class="w-100" v-else>
+    <!-- <img :src="restaurant.photos[0].getUrl({ maxWidth: 1080, maxHeight: 1080 })" alt=""> -->
+
   </div>
+  <div id="google_vote"></div>
 </template>
 
 <script>
@@ -39,16 +39,21 @@ export default {
   components: {
     VotingCard
   },
+  emits: ['alert', 'notice'],
   data() {
     return {
       session: {},
       restaurant: {},
+      restaurantImageURL: '',
       votes: [],
       googleApiKey: process.env.VUE_APP_GOOGLE_API_KEY
     }
   },
   async mounted() {
     await this.getSession();
+    if (this.restaurant) {
+      this.getPhotoUrl()
+    }
     // this.getVotes()
     this.subscribeToChannel();
   },
@@ -61,6 +66,7 @@ export default {
           this.restaurant = this.session.restaurant
         }
         this.votes = response.data.votes
+        // console.log(this.votes);
       } catch (error) {
         console.error('An error occurred while fetching session:', error);
       }
@@ -101,7 +107,25 @@ export default {
         this.votes.splice(index, 1);
       }
     },
-  }
+    async getPhotoUrl() {
+      const request = {
+        placeId: this.restaurant.place_id,
+        fields: ['photo']
+      };
+      // eslint-disable-next-line no-undef
+      const placesService = new google.maps.places.PlacesService(document.getElementById('google_vote'))
+      placesService.getDetails(request, (results, status) => {
+        // eslint-disable-next-line no-undef
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          if (results.photos) {
+            this.restaurantImageURL = results.photos[0].getUrl({ maxWidth: 1080, maxHeight: 1080 })
+          }
+        } else {
+          console.error('Places search failed with status:', status);
+        }
+      });
+    }
+  },
 }
 </script>
 
