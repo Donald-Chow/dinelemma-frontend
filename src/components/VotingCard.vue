@@ -2,8 +2,8 @@
   <div class="voting-card carousel slide">
 
     <div class="carousel-indicators">
-      <div v-if="vote.restaurant.photos.length != 0">
-        <button v-for="(photo, index) in vote.restaurant.photos.slice(0, 5)" :key="index" type="button"
+      <div v-if="photosUrls.length != 0">
+        <button v-for="(photo, index) in photosUrls" :key="index" type="button"
           :class="{ 'active': index === activePhotoIndex }" :aria-current="{ 'true': index === activePhotoIndex }"
           :aria-label="'Slide ' + index" @click="setPhoto(index)"></button>
       </div>
@@ -13,12 +13,13 @@
     </div>
 
     <div class="carousel-inner">
-      <div v-if="vote.restaurant.photos.length != 0">
-        <div v-for="(photo, index) in vote.restaurant.photos.slice(0, 5)" :key="index"
+      <div v-if="photosUrls.length != 0">
+        <div v-for="(photo, index) in photosUrls" :key="index"
           :class="['carousel-item', { 'active': index === activePhotoIndex }]">
-          <img
+          <!-- <img
             :src="'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1080&photo_reference=' + photo.photo_reference + '&key=' + googleApiKey"
-            class="d-block w-100">
+            class="d-block w-100"> -->
+          <img :src="photo" class="d-block w-100" :alt="'photo-slide' + index">
           <div class="img-filter"></div>
           <div class="carousel-caption d-md-block">
             <h5>{{ vote.restaurant.name }}</h5>
@@ -77,6 +78,7 @@
         <button class='btn btn-lg btn-outline-success' @click.prevent="handleVote(0)">Yes</button>
       </div>
     </div>
+    <div id="google"></div>
   </div>
 </template>
 
@@ -88,13 +90,39 @@ export default {
   props: {
     vote: {}
   },
+  mounted() {
+    this.getPhotosUrls()
+  },
   data() {
     return {
-      googleApiKey: process.env.VUE_APP_GOOGLE_API_KEY,
-      activePhotoIndex: 0
+      // googleApiKey: process.env.VUE_APP_GOOGLE_API_KEY,
+      activePhotoIndex: 0,
+      photosUrls: []
     }
   },
   methods: {
+    getPhotosUrls() {
+      const request = {
+        placeId: this.vote.restaurant.place_id,
+        fields: ['photo']
+      };
+      // eslint-disable-next-line no-undef
+      const placesService = new google.maps.places.PlacesService(document.getElementById('google'))
+      placesService.getDetails(request, (results, status) => {
+        // eslint-disable-next-line no-undef
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          if (results.photos) {
+            console.log(results.photos.slice(0, 5));
+            this.photosUrls = results.photos.slice(0, 5).map(photo => {
+              return photo.getUrl({ maxWidth: 1080, maxHeight: 1080 })
+            })
+            console.log(this.photosUrls);
+          }
+        } else {
+          console.error('Places search failed with status:', status);
+        }
+      });
+    },
     async handleVote(result) {
       try {
         const response = await axios.patch(`votes/${this.vote.id}`, {
