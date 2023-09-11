@@ -57,6 +57,9 @@ export default {
     // this.getVotes()
     this.subscribeToChannel();
   },
+  watch: {
+    'restaurant': this.getPhotoUrl
+  },
   methods: {
     async getSession() {
       try {
