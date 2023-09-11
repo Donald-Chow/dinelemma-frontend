@@ -18,7 +18,7 @@
       <div class="btn btn-warning">BACK</div>
     </router-link>
     <h3>Chosen Restaurant: <strong>{{ restaurant.name }}</strong></h3>
-    <img :src="restaurantImageURL" class="d-block w-100" v-if="restaurant.photos.length != 0">
+    <img :src="restaurantImageURL" class="d-block w-100" v-if="restaurantImageURL">
     <img
       :src="'https://source.unsplash.com/featured/?' + restaurant.category + '&food&' + Math.floor(Math.random() * 1000)"
       alt="" class="w-100" v-else>
@@ -117,7 +117,9 @@ export default {
       placesService.getDetails(request, (results, status) => {
         // eslint-disable-next-line no-undef
         if (status === google.maps.places.PlacesServiceStatus.OK) {
-          this.restaurantImageURL = results.photos[0].getUrl({ maxWidth: 1080, maxHeight: 1080 })
+          if (results.photos) {
+            this.restaurantImageURL = results.photos[0].getUrl({ maxWidth: 1080, maxHeight: 1080 })
+          }
         } else {
           console.error('Places search failed with status:', status);
         }
