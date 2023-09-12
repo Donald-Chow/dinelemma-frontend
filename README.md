@@ -1,5 +1,7 @@
 # dinelemma-frontend
 
+** This app uses Rails as backend, please use this [link](https://github.com/Donald-Chow/dinelemma-backend) to view the backend repository. **
+
 ## Project setup
 ```
 npm install
