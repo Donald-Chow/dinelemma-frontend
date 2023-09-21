@@ -83,7 +83,8 @@ export default {
       width: 100%;
       color: inherit;
       background-color: inherit;
-      font-size: 24px;
+      padding: 2px 2px;
+      font-size: 18px;
 
       &:focus {
         outline-color: $primary;

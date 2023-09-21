@@ -67,11 +67,6 @@ export default {
 </script>
 
 <style lang="scss">
-// #app {
-//   text-align: center;
-//   // color: #2c3e50;
-// }
-
 .container {
   // padding-top: 16px;
   // padding-bottom: 8vh;
