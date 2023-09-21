@@ -36,13 +36,18 @@ h3 {
 
 header {
   background-color: $main1;
-  padding: 16px 16px 8px 16px;
-  position: sticky;
+  padding: 16px 0px 8px;
+  position: fixed;
+  width: 100%;
   top: 0px;
   z-index: 99;
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  div {
+    padding: 0px 16px
+  }
 }
 
 img {
