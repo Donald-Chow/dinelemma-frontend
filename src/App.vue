@@ -67,16 +67,16 @@ export default {
 </script>
 
 <style lang="scss">
-#app {
-  text-align: center;
-  // color: #2c3e50;
-}
+// #app {
+//   text-align: center;
+//   // color: #2c3e50;
+// }
 
 .container {
   // padding-top: 16px;
   // padding-bottom: 8vh;
-  width: 90%;
-  margin: auto;
+  width: 70%;
+  margin: 60px auto 50px;
 }
 
 .flash-notification {

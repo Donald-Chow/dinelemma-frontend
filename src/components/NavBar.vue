@@ -49,6 +49,7 @@ nav {
   .nav-item {
     flex-grow: 1;
     padding: 16px 0px;
+    text-align: center;
   }
 }
 </style>
