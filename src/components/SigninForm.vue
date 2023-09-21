@@ -1,29 +1,29 @@
 <template>
-  <div class="border p-4 bg-light">
-    <form class="h-100 d-flex flex-column justify-content-center" @submit.prevent="handleSubmit">
-      <ErrorAlert v-if="error" :error="error" />
-      <h1 class="mb-3">Login</h1>
-      <div class="text-center mb-3">New to Dinelemma?<router-link to="/signup">Sign up today</router-link>.</div>
-      <div class="mb-3">
-        <input type="email" class="form-control" v-model="email" placeholder="Email">
-      </div>
-      <div class="mb-3">
-        <input type="password" class="form-control" v-model="password" placeholder="Password">
-      </div>
-      <div class="d-flex justify-content-end mb-3">
-        <a href="" aria-disabled="true">Forgot Password?</a>
-        <!-- <router-link to="/forget">Forgot Password?</router-link> -->
-      </div>
-      <div class="d-grid">
-        <button type="submit" class="btn btn-primary btn-lg">Submit</button>
-      </div>
-    </form>
-  </div>
+  <form @submit.prevent="handleSubmit" class="signin-form">
+    <h2>Login</h2>
+    <div class="form-input">
+      <label for="email" style="text-align: start;"> Your email</label><br>
+      <input name="email" type="email" v-model="email" :class="{ invalid }">
+    </div>
+    <div class="form-input">
+      <label for="password">Password</label><br>
+      <input name="password" type="password" v-model="password" :class="{ invalid }">
+    </div>
+    <ErrorAlert v-if="error" :error="error" />
+    <div class="form-button">
+      <ButtonPrimary type="submit" text="Submit" />
+    </div>
+    <div class="center">
+      <a href="" aria-disabled="true">Forgot Password?</a>
+      <!-- <router-link to="/forget">Forgot Password?</router-link> -->
+    </div>
+  </form>
 </template>
 
 <script>
 import axios from 'axios'
 import ErrorAlert from './ErrorAlert.vue'
+import ButtonPrimary from '@/components/Shared/ButtonPrimary.vue'
 
 export default {
   name: 'SigninForm',
@@ -31,11 +31,13 @@ export default {
     return {
       email: '',
       password: '',
-      error: ''
+      error: '',
+      invalid: false
     }
   },
   components: {
-    ErrorAlert
+    ErrorAlert,
+    ButtonPrimary
   },
   methods: {
     async handleSubmit() {
@@ -62,6 +64,7 @@ export default {
       } catch (error) {
         console.error('An error occurred while logging in:', error)
         this.error = 'Invalid username/password'
+        this.invalid = true
       }
     }
   }
@@ -70,7 +73,51 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+.signin-form {
+  .form-input {
+    width: 100%;
+
+    input {
+      border: 0px;
+      border-bottom: 1px solid $gray;
+      width: 100%;
+      color: inherit;
+      background-color: inherit;
+      font-size: 24px;
+
+      &:focus {
+        outline-color: $primary;
+      }
+
+      &.invalid {
+        border-bottom: 1px solid $red;
+      }
+    }
+
+    label {
+      text-align: start;
+      font-size: 12px;
+      color: $medium-gray;
+
+    }
+  }
+
+  .form-button {
+    margin: 8px 0px;
+  }
+}
+
+.center {
+  text-align: center;
+}
+
 a {
   color: $primary;
+  font-size: 12px;
+}
+
+h2 {
+  text-align: start;
+  margin-bottom: 24px;
 }
 </style>
