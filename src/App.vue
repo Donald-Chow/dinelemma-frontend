@@ -69,12 +69,14 @@ export default {
 <style lang="scss">
 #app {
   text-align: center;
-  color: #2c3e50;
+  // color: #2c3e50;
 }
 
 .container {
-  padding-top: 16px;
-  padding-bottom: 8vh;
+  // padding-top: 16px;
+  // padding-bottom: 8vh;
+  width: 90%;
+  margin: auto;
 }
 
 .flash-notification {
