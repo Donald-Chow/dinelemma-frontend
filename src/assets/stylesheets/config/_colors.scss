@@ -1,9 +1,7 @@
 // Define variables for your color scheme
 
-// Comment by Joyce: This is the red color used in Figma.
 // You can use it for headlines, titles or any other important information
 $red: #7a1010;
-
 $blue: #053884;
 $yellow: #9c7a3d;
 $orange: #bf691d;
@@ -20,3 +18,8 @@ $main1: #ED7277;
 $main2: #DB7F85;
 $main3: #FCDBDE;
 $main4: #EAD2CE;
+
+$primary: #5492AC;
+$primary-darken: color-mix(in srgb,$primary,#000 15%);
+
+$bg-white: #f5f5f5;
