@@ -7,9 +7,10 @@ body {
   // background: linear-gradient(125deg, hsla(356, 69%, 72%, 1) 0%, hsla(357, 83%, 91%, 1) 60%, hsla(357, 79%, 94%, 1) 100%);
   background: $bg-white;
   font-family: $body-font;
+  color: $text-primary;
   margin: 0;
 }
 
-h1,h2,h3,h4,h5,h6 {
+h1,h2,h3,h4,h5,h6{
   margin: 0;
 }
