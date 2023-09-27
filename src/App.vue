@@ -72,6 +72,7 @@ export default {
   // padding-bottom: 8vh;
   width: 70%;
   margin: 60px auto 50px;
+  text-align: center;
 }
 
 .flash-notification {

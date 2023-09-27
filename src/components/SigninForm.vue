@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="handleSubmit" class="signin-form">
-    <h2>Login</h2>
+    <h2>Log in</h2>
     <div class="form-input">
       <label for="email" style="text-align: start;"> Your email</label><br>
       <input name="email" type="email" v-model="email" :class="{ invalid }">
@@ -13,10 +13,10 @@
     <div class="form-button">
       <ButtonPrimary type="submit" text="Submit" />
     </div>
-    <div class="center">
+    <!-- <div class="center">
       <a href="" aria-disabled="true">Forgot Password?</a>
-      <!-- <router-link to="/forget">Forgot Password?</router-link> -->
-    </div>
+      <router-link to="/forget">Forgot Password?</router-link>
+    </div> -->
   </form>
 </template>
 
