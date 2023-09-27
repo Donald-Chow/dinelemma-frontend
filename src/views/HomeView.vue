@@ -54,6 +54,7 @@ h3 {
 }
 
 h2 {
+  margin-top: 16px;
   margin-bottom: 64px;
 }
 </style>
