@@ -1,13 +1,15 @@
 <template>
   <div>
-    Restaurant Lists
-    <div class="d-flex w-100 border-bottom">
-      <input class="m-0 p-2 text-start bg-white" v-model="newListName" placeholder="New list" required />
-      <button @click="createAndAddToList(newListName)">Create</button>
-    </div>
-    <div v-for=" list in localLists" :key="list.name" class="bg-white border-bottom" @click="addToList(list)">
-      <div>
-        <h2 class="m-0 p-2 text-start">{{ list.name }}</h2>
+    <h4>Restaurant Lists</h4>
+    <div class="list">
+      <div class="form">
+        <input class="m-0 p-2 text-start bg-white" v-model="newListName" placeholder="New list" required />
+        <button @click="createAndAddToList(newListName)">Create</button>
+      </div>
+      <div v-for=" list in localLists" :key="list.name" @click="addToList(list)">
+        <div>
+          <h2 class="m-0 p-2 text-start">{{ list.name }}</h2>
+        </div>
       </div>
     </div>
   </div>
@@ -59,20 +61,27 @@ export default {
 </script>
 
 <style scoped lang="scss">
-input {
-  padding: 0px;
-  background-color: inherit;
-  border: 0px;
-  font-family: "Raleway";
-  font-weight: 700;
-  font-size: calc(1.325rem + 0.9vw);
-  line-height: 1.2;
-  color: #2c3e50;
-  width: 100%;
+h4 {
+  color: $primary
+}
 
-  &:focus {
-    border: 3px solid #555;
-    width: 750%
+.form {
+  display: flex;
+
+  input {
+    padding: 0px;
+    background-color: $white;
+    border: 0px;
+    text-align: center;
+    font-size: calc(1.325rem + 0.9vw);
+    line-height: 1.2;
+    color: $primary;
+    width: 100%;
+
+    &:focus {
+      border: 3px solid #555;
+      width: 100%
+    }
   }
 }
 
@@ -82,6 +91,14 @@ button {
   background-color: $main1;
   border: none;
   width: 25%
+}
+
+.list {
+  background-color: $white;
+
+  div {
+    border-bottom: 1px solid $text-primary;
+  }
 }
 
 // input:focus+button {
