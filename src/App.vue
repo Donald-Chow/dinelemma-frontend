@@ -7,7 +7,7 @@
     <NoticeFlash :notice="notice" @dismissNotice="dismissNotice" />
   </div>
   <div v-if="isAlertVisible" class="flash-notification">
-    <AlertFlash :alert="alert" @dismissNotice="dismissAlert" />
+    <AlertFlash :alert="alert" @dismissAlert="dismissAlert" />
   </div>
   <NavBar />
 </template>
@@ -67,18 +67,12 @@ export default {
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
 .container {
-  min-height: 89vh;
-  padding-top: 16px;
-  padding-bottom: 8vh;
+  // padding-top: 16px;
+  // padding-bottom: 8vh;
+  width: 70%;
+  margin: 60px auto 50px;
+  text-align: center;
 }
 
 .flash-notification {

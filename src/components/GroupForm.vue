@@ -43,8 +43,6 @@
 
 <script>
 import axios from 'axios'
-// import bootstrap from 'bootstrap';
-import bootstrap from 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Import Bootstrap JavaScript
 
 export default {
   name: 'GroupForm',
@@ -64,8 +62,8 @@ export default {
       try {
         const response = await axios.post('groups', groupData);
         console.log('Group created:', response.data);
-        const newGroupModal = new bootstrap.Modal(this.$refs.newGroupModal, { backdrop: false })
-        newGroupModal.hide()
+        // const newGroupModal = new bootstrap.Modal(this.$refs.newGroupModal, { backdrop: false })
+        // newGroupModal.hide()
         const backdrops = document.querySelectorAll('.modal-backdrop');
         if (backdrops) {
           backdrops.forEach(backdrop => { backdrop.remove(); })

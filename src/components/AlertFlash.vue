@@ -1,8 +1,8 @@
 <template>
-  <div class="alert alert-danger alert-dismissible fade show m-1" role="alert">
+  <div class="alert">
     {{ alert }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" @click="dismissNotice">
-    </button>
+    <button @click="dismissAlert">
+      X</button>
   </div>
 </template>
 
@@ -11,9 +11,23 @@ export default {
   name: 'AlertFlash',
   props: ['alert'],
   methods: {
-    dismissNotice() {
+    dismissAlert() {
       this.$emit('dismissAlert');
     },
   },
 }
 </script>
+
+<style scoped lang="scss">
+.alert {
+  background-color: $red;
+  padding: 8px;
+  border-radius: 6px;
+  color: $white;
+
+  button {
+    background: none;
+    border: none
+  }
+}
+</style>
