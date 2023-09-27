@@ -1,29 +1,26 @@
 <template>
   <div class="restaurant-card">
-    <!-- <img
-      :src="'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=' + restaurant.photos[0].photo_reference + '&key=' + googleApiKey"
-      alt="" v-if="restaurant.photos"> -->
     <img :src="restaurant.photos[0].getUrl({ maxWidth: 1080, maxHeight: 1080 })" alt="" v-if="restaurant.photos">
     <img :src="'https://source.unsplash.com/featured/?' + restaurant.name + Math.floor(Math.random() * 1000)" alt=""
       v-if="!restaurant.photos">
-    <div class="d-flex justify-content-between mb-3">
-      <div class="flex-grow-1 me-2">
-        <h4 class="m-0 text-start">{{ restaurant.name }}</h4>
-        <p class="m-0 text-start">Rating: {{ restaurant.rating }} <span v-for=" index  in  Math.floor(restaurant.rating) "
-            :key="index"><i class="fa-solid fa-star"></i></span><span
+    <div class="restaurant-details">
+      <div class="restaurant-info">
+        <h4>{{ restaurant.name }}</h4>
+        <p>Rating: {{ restaurant.rating }} <span v-for=" index  in  Math.floor(restaurant.rating) " :key="index"><i
+              class="fa-solid fa-star"></i></span><span
             v-if="(restaurant.rating - Math.floor(restaurant.rating)) >= 0.5"><i
               class="fa-solid fa-star-half-stroke"></i></span><span
             v-for=" index  in  (5 - Math.round(restaurant.rating)) " :key="index"><i
               class="fa-regular fa-star"></i></span>({{ restaurant.user_ratings_total }})</p>
-        <p class="m-0 text-start">{{ category }} <span v-if="restaurant.price_level">- </span><span
-            v-for=" index  in  restaurant.price_level " :key="index"><i class="fa-solid fa-yen-sign"></i></span>
+        <p>{{ category }} <span v-if="restaurant.price_level">- </span><span v-for=" index  in  restaurant.price_level "
+            :key="index"><i class="fa-solid fa-yen-sign"></i></span>
         </p>
       </div>
       <div v-if="listShow" class="restaurant-list">
         <RestaurantList :restaurant="restaurant" :lists="lists" @closeList="listShow = false" @notice="emitNotice" />
       </div>
-      <div>
-        <button class="btn btn-primary" @click="this.listShow = !this.listShow">+</button>
+      <div class="list-button">
+        <button @click="this.listShow = !this.listShow">+</button>
       </div>
     </div>
   </div>
@@ -53,12 +50,12 @@ export default {
 
 <style scoped lang="scss" >
 .restaurant-card {
-  background-color: $main4;
-  padding: 8px;
-  margin-bottom: 8px;
+  background-color: $bg-white;
+  padding: 12px;
+  margin-bottom: 16px;
   border-radius: 8px;
   position: relative;
-  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.15);
+  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.1);
 
   img {
     width: 100%;
@@ -67,14 +64,48 @@ export default {
     object-fit: cover;
     border-radius: 8px;
     margin-bottom: 8px;
-    box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.15);
+    box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.1);
+  }
+
+  .restaurant-info {
+    text-align: start;
+
+    h4 {
+      margin-bottom: 8px;
+    }
+
+    p {
+      font-size: 12px;
+      margin: 4px 0px;
+    }
+  }
+
+  .list-button {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+
+    button {
+      border: none;
+      height: 35px;
+      width: 35px;
+      border-radius: 8px;
+      font-size: 24px;
+      background-color: none;
+
+      &:hover {
+        background-color: $light-gray;
+      }
+    }
+
   }
 
   .restaurant-list {
     position: absolute;
-    top: 360px;
-    right: 10px;
-    background-color: white;
+    bottom: -105px;
+    right: 5px;
+    border-radius: 8px;
+    background-color: $light-gray;
     padding: 8px;
     width: 250px;
     max-height: 400px;

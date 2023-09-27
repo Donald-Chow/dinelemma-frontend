@@ -1,8 +1,9 @@
 <template>
-  <h1>SEARCH</h1>
-  <form @submit.prevent="handleSearch" class="mb-3">
-    <input type="text" v-model="query" class="rounded">
-    <button type="submit" class="rounded">Search</button>
+  <h2>Find restaurants</h2>
+  <form @submit.prevent="handleSearch" class="form">
+    <div class="form-input">
+      <input type="text" v-model="query" placeholder="Search Restaurant...">
+    </div>
   </form>
   <RestaurantCard v-for="restaurant in  results " :key="restaurant.place_id" :restaurant="restaurant" :lists="lists"
     @notice="emitNotice" />
@@ -58,3 +59,12 @@ export default {
   }
 }
 </script>
+<style scoped lang="scss">
+h2 {
+  padding: 24px 0px;
+}
+
+.form {
+  margin-bottom: 32px
+}
+</style>
