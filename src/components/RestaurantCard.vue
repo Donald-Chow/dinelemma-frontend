@@ -64,7 +64,7 @@ export default {
     object-fit: cover;
     border-radius: 8px;
     margin-bottom: 8px;
-    box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.1);
+    box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.1)
   }
 
   .restaurant-info {
@@ -102,8 +102,8 @@ export default {
 
   .restaurant-list {
     position: absolute;
-    bottom: -105px;
-    right: 5px;
+    top: 390px;
+    right: 4px;
     border-radius: 8px;
     background-color: $light-gray;
     padding: 8px;
