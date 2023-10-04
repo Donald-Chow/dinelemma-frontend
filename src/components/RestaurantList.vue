@@ -2,10 +2,10 @@
   <div>
     <h2>Restaurant Lists</h2>
     <div class="list">
-      <div class="form">
+      <form class="form" @submit.prevent="createAndAddToList">
         <input v-model="newListName" placeholder="New list" required />
-        <button @click="createAndAddToList(newListName)">Create</button>
-      </div>
+        <button type="submit">Create</button>
+      </form>
       <div v-for=" list in localLists" :key="list.name" @click="addToList(list)">
         <h4>{{ list.name }}</h4>
       </div>
@@ -67,28 +67,26 @@ h2 {
 
 .form {
   display: flex;
+  border-bottom: 1px solid $gray;
+
+  &:focus-within {
+    // border: 3px solid #555;
+    width: 100%;
+    button {
+      display: block;
+    }
+  }
 
   input {
-    padding: 0px;
-    background-color: $white;
     border: 0px;
+    width: 100%;
+    color: inherit;
+    background-color: inherit;
+    padding: 2px 2px;
     text-align: center;
     font-size: 24px;
-    line-height: 1.2;
-    color: inherit;
-    width: 100%;
     font-weight: 800;
-
     font-family: inherit;
-
-    &:focus-within {
-      // border: 3px solid #555;
-      width: 100%;
-
-      &+button {
-        display: block;
-      }
-    }
   }
 }
 
