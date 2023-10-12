@@ -70,7 +70,7 @@ export default {
 .container {
   // padding-top: 16px;
   // padding-bottom: 8vh;
-  width: 70%;
+  width: 80%;
   margin: 60px auto 50px;
   text-align: center;
 }

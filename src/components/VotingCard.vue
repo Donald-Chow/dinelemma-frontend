@@ -1,5 +1,5 @@
 <template>
-  <div class="voting-card carousel slide">
+  <div class="voting-card">
 
     <div class="carousel-indicators">
       <div v-if="photosUrls.length != 0">
@@ -13,15 +13,28 @@
     </div>
 
     <div class="carousel-inner">
-      <div v-if="photosUrls.length != 0">
+      <!-- <div v-if="photosUrls.length != 0">
         <div v-for="(photo, index) in photosUrls" :key="index"
           :class="['carousel-item', { 'active': index === activePhotoIndex }]">
+          <img :src="photo" class="d-block w-100" :alt="'photo-slide' + index">
+          <div class="img-filter"></div>
+          <VoteCardInfo :restaurant="vote.restaurant" />
+        </div>
+      </div> -->
+      <div>
+        <!-- v-else -->
+        <div class="carousel-item active">
+          <img
+            :src="'https://source.unsplash.com/featured/?' + vote.restaurant.category + '&' + Math.floor(Math.random() * 1000)">
+          <div class="img-filter"></div>
+          <VoteCardInfo :restaurant="vote.restaurant" />
+        </div>
+      </div>
           <!-- <img
             :src="'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1080&photo_reference=' + photo.photo_reference + '&key=' + googleApiKey"
             class="d-block w-100"> -->
-          <img :src="photo" class="d-block w-100" :alt="'photo-slide' + index">
-          <div class="img-filter"></div>
-          <div class="carousel-caption d-md-block">
+
+                      <!-- <div class="carousel-caption d-md-block">
             <h5>{{ vote.restaurant.name }}</h5>
             <p v-if="vote.restaurant.category">Category: {{ vote.restaurant.category }}</p>
             <p class="m-0 text-start">Rating: {{ vote.restaurant.rating }} <span
@@ -35,32 +48,7 @@
               </span><span v-for="index in vote.restaurant.price_level" :key="index"><i
                   class="fa-solid fa-yen-sign"></i></span>
             </p>
-          </div>
-        </div>
-      </div>
-      <div v-else>
-        <div class="carousel-item active">
-          <img
-            :src="'https://source.unsplash.com/featured/?' + vote.restaurant.category + '&' + Math.floor(Math.random() * 1000)"
-            class="d-block w-100">
-          <div class="img-filter"></div>
-          <div class="carousel-caption d-md-block">
-            <h5>{{ vote.restaurant.name }}</h5>
-            <p v-if="vote.restaurant.category">Category: {{ vote.restaurant.category }}</p>
-            <p class="m-0 text-start">Rating: {{ vote.restaurant.rating }} <span
-                v-for="index in Math.floor(vote.restaurant.rating)" :key="index"><i
-                  class="fa-solid fa-star"></i></span><span
-                v-if="(vote.restaurant.rating - Math.floor(vote.restaurant.rating)) >= 0.5"><i
-                  class="fa-solid fa-star-half-stroke"></i></span><span
-                v-for="index in (5 - Math.round(vote.restaurant.rating))" :key="index"><i
-                  class="fa-regular fa-star"></i></span>({{ vote.restaurant.user_ratings_total }})</p>
-            <p class="m-0 text-start">{{ vote.restaurant.types[0] }} <span v-if="vote.restaurant.price_level">-
-              </span><span v-for="index in vote.restaurant.price_level" :key="index"><i
-                  class="fa-solid fa-yen-sign"></i></span>
-            </p>
-          </div>
-        </div>
-      </div>
+          </div> -->
 
     </div>
 
@@ -269,19 +257,13 @@ export default {
 
   img {
     height: 100%;
+    width: 100%;
     object-fit: cover;
   }
 }
 
-.carousel-caption {
-  position: absolute;
-  right: 32px;
-  bottom: 88px;
-  left: 16px;
-  padding-top: 1.25rem;
-  padding-bottom: 1.25rem;
-  color: #FCF1F2;
-  text-align: start;
+.active {
+  display:block;
 }
 
 @keyframes fadeinout {
