@@ -1,17 +1,6 @@
 <template>
   <div class="voting-card">
 
-    <div class="carousel-indicators">
-      <div v-if="photosUrls.length != 0">
-        <button v-for="(photo, index) in photosUrls" :key="index" type="button"
-          :class="{ 'active': index === activePhotoIndex }" :aria-current="{ 'true': index === activePhotoIndex }"
-          :aria-label="'Slide ' + index" @click="setPhoto(index)"></button>
-      </div>
-      <div v-else>
-        <button type="button" class='active' aria-current='true' aria-label='Slide'></button>
-      </div>
-    </div>
-
     <div class="carousel-inner">
       <!-- <div v-if="photosUrls.length != 0">
         <div v-for="(photo, index) in photosUrls" :key="index"
@@ -30,11 +19,11 @@
           <VoteCardInfo :restaurant="vote.restaurant" />
         </div>
       </div>
-          <!-- <img
+      <!-- <img
             :src="'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1080&photo_reference=' + photo.photo_reference + '&key=' + googleApiKey"
             class="d-block w-100"> -->
 
-                      <!-- <div class="carousel-caption d-md-block">
+      <!-- <div class="carousel-caption d-md-block">
             <h5>{{ vote.restaurant.name }}</h5>
             <p v-if="vote.restaurant.category">Category: {{ vote.restaurant.category }}</p>
             <p class="m-0 text-start">Rating: {{ vote.restaurant.rating }} <span
@@ -52,7 +41,7 @@
 
     </div>
 
-    <div>
+    <div class="carousel-control">
       <button class="carousel-control-prev" type="button" @click="prev">
         <span class="visually-hidden">Previous</span>
       </button>
@@ -65,6 +54,15 @@
         <button class='btn btn-lg btn-outline-warning' @click.prevent="handleVote(2)">Super</button>
         <button class='btn btn-lg btn-outline-success' @click.prevent="handleVote(0)">Yes</button>
       </div>
+    </div>
+
+    <div v-if="photosUrls.length != 0" class="carousel-indicators">
+      <button v-for="(photo, index) in photosUrls" :key="index" type="button"
+        :class="{ 'active': index === activePhotoIndex }" :aria-current="{ 'true': index === activePhotoIndex }"
+        :aria-label="'Slide ' + index" @click="setPhoto(index)"></button>
+    </div>
+    <div v-else class="carousel-indicators">
+      <button type="button" class='active' aria-current='true' aria-label='Slide'></button>
     </div>
     <div id="google"></div>
   </div>
@@ -163,7 +161,7 @@ export default {
   position: absolute;
   right: 0;
   left: 0;
-  z-index: 2;
+  // z-index: 2;
   display: flex;
   justify-content: center;
   padding: 0;
@@ -181,7 +179,7 @@ export default {
     padding: 0;
     margin-right: 3px;
     margin-left: 3px;
-    text-indent: -999px;
+    // text-indent: -999px;
     cursor: pointer;
     background-color: #FCF1F2;
     background-clip: padding-box;
@@ -190,45 +188,54 @@ export default {
     border-bottom: 10px solid transparent;
     opacity: 0.5;
     transition: opacity 0.6s ease;
+
+    &+.active {
+      opacity: 0.8;
+
+    }
   }
 }
 
-.carousel-control-prev {
-  // position: absolute;
-  // top: 0;
-  // bottom: 0;
-  // z-index: 1;
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
-  // padding: 0;
-  // color: #FCF1F2;
-  // text-align: center;
-  // background: none;
-  // border: 0;
-  // opacity: 0.5;
-  // transition: opacity 0.15s ease;
-  width: 50%;
-  height: 75%;
-}
+.carousel-control {
+  // position: relative;
 
-.carousel-control-next {
-  // position: absolute;
-  // top: 0;
-  // bottom: 0;
-  // z-index: 1;
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
-  // padding: 0;
-  // color: #FCF1F2;
-  // text-align: center;
-  // background: none;
-  // border: 0;
-  // opacity: 0.5;
-  // transition: opacity 0.15s ease;
-  width: 50%;
-  height: 75%;
+  .carousel-control-prev {
+    position: absolute;
+    top: 0;
+    -moz-border-left-colors: 0;
+    // z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    color: #FCF1F2;
+    text-align: center;
+    background: blue;
+    border: 0;
+    opacity: 0.5;
+    transition: opacity 0.15s ease;
+    width: 50%;
+    height: 75%;
+  }
+
+  .carousel-control-next {
+    position: absolute;
+    top: 0;
+    right: 0;
+    // z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    color: #FCF1F2;
+    text-align: center;
+    background: green;
+    border: 0;
+    opacity: 0.5;
+    transition: opacity 0.15s ease;
+    width: 50%;
+    height: 75%;
+  }
 }
 
 
@@ -263,7 +270,7 @@ export default {
 }
 
 .active {
-  display:block;
+  display: block;
 }
 
 @keyframes fadeinout {
