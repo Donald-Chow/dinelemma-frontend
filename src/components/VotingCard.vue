@@ -50,9 +50,9 @@
       </button>
 
       <div class="voting-bar">
-        <button class='btn btn-lg btn-outline-danger' @click.prevent="handleVote(1)">NO</button>
-        <button class='btn btn-lg btn-outline-warning' @click.prevent="handleVote(2)">Super</button>
-        <button class='btn btn-lg btn-outline-success' @click.prevent="handleVote(0)">Yes</button>
+        <button class='btn btn-no' @click.prevent="handleVote(1)">NO</button>
+        <button class='btn btn-super' @click.prevent="handleVote(2)">Super</button>
+        <button class='btn btn-yes' @click.prevent="handleVote(0)">Yes</button>
       </div>
     </div>
 
@@ -70,6 +70,7 @@
 
 <script>
 import axios from 'axios'
+import VoteCardInfo from './VoteSession/VoteCardInfo.vue'
 
 export default {
   name: 'VotingCard',
@@ -85,6 +86,9 @@ export default {
       activePhotoIndex: 0,
       photosUrls: []
     }
+  },
+  components: {
+    VoteCardInfo
   },
   methods: {
     getPhotosUrls() {
@@ -272,6 +276,46 @@ export default {
 
 .active {
   display: block;
+}
+
+.btn {
+  // letter-spacing: normal;
+  // word-spacing: normal;
+  // line-height: normal;
+  // text-transform: none;
+  // text-indent: 0px;
+  // text-shadow: none;
+  // display: inline-block;
+  // text-align: center;
+  // align-items: flex-start;
+  // cursor: default;
+  // box-sizing: border-box;
+  background-color: transparent;
+  // writing-mode: horizontal-tb !important;
+  // margin: 0em;
+  padding-block: 1px;
+  padding-inline: 6px;
+  border-width: 1px;
+  border-style: solid;
+  border-image: initial;
+  border-radius: 50px;
+  width: 50px;
+  height: 50px;
+
+  &.btn-yes {
+    border-color: green;
+    color: green;
+  }
+
+  &.btn-no {
+    border-color: red;
+    color: red;
+  }
+
+  &.btn-super {
+    border-color: blue;
+    color: blue;
+  }
 }
 
 @keyframes fadeinout {
