@@ -173,7 +173,7 @@ export default {
 
   button {
     box-sizing: content-box;
-    width: 40px;
+    width: 50px;
     height: 3px;
     padding: 0;
     margin-right: 3px;
@@ -244,11 +244,11 @@ export default {
   display: none;
   float: left;
   width: 100%;
-  margin-right: -100%;
-  backface-visibility: hidden;
+  // margin-right: -100%;
+  // backface-visibility: hidden;
   transition: transform 0.6s ease-in-out;
 
-  &+.active {
+  &.active {
     display: block
   }
 
@@ -259,12 +259,14 @@ export default {
     width: 100%;
     bottom: 0;
     left: 0;
+    border-radius: 0px 10px 10px;
   }
 
   img {
     height: 100%;
     width: 100%;
     object-fit: cover;
+    border-radius: 10px;
   }
 }
 
