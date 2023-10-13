@@ -43,10 +43,10 @@
 
     <div class="carousel-control">
       <button class="carousel-control-prev" type="button" @click="prev">
-        <span class="visually-hidden">Previous</span>
+        <!-- <span class="visually-hidden">Previous</span> -->
       </button>
-      <button class="carousel-control-next" type="button" @click="prev">
-        <span class="visually-hidden">Next</span>
+      <button class="carousel-control-next" type="button" @click="next">
+        <!-- <span class="visually-hidden">Next</span> -->
       </button>
 
       <div class="voting-bar">
@@ -172,9 +172,8 @@ export default {
   height: fit-content;
 
   button {
-    flex: 1 !important;
     box-sizing: content-box;
-    width: 30px;
+    width: 40px;
     height: 3px;
     padding: 0;
     margin-right: 3px;
@@ -189,7 +188,7 @@ export default {
     opacity: 0.5;
     transition: opacity 0.6s ease;
 
-    &+.active {
+    &.active {
       opacity: 0.8;
 
     }
@@ -210,9 +209,9 @@ export default {
     padding: 0;
     color: #FCF1F2;
     text-align: center;
-    background: blue;
+    // background: blue;
     border: 0;
-    opacity: 0.5;
+    opacity: 0;
     transition: opacity 0.15s ease;
     width: 50%;
     height: 75%;
@@ -229,9 +228,9 @@ export default {
     padding: 0;
     color: #FCF1F2;
     text-align: center;
-    background: green;
+    // background: green;
     border: 0;
-    opacity: 0.5;
+    opacity: 0;
     transition: opacity 0.15s ease;
     width: 50%;
     height: 75%;
