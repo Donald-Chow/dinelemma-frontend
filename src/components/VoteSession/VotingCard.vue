@@ -18,26 +18,6 @@
         </div>
       </div>
       <VoteCardInfo :restaurant="vote.restaurant" />
-      <!-- <img
-            :src="'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1080&photo_reference=' + photo.photo_reference + '&key=' + googleApiKey"
-            class="d-block w-100"> -->
-
-      <!-- <div class="carousel-caption d-md-block">
-            <h5>{{ vote.restaurant.name }}</h5>
-            <p v-if="vote.restaurant.category">Category: {{ vote.restaurant.category }}</p>
-            <p class="m-0 text-start">Rating: {{ vote.restaurant.rating }} <span
-                v-for="index in Math.floor(vote.restaurant.rating)" :key="index"><i
-                  class="fa-solid fa-star"></i></span><span
-                v-if="(vote.restaurant.rating - Math.floor(vote.restaurant.rating)) >= 0.5"><i
-                  class="fa-solid fa-star-half-stroke"></i></span><span
-                v-for="index in (5 - Math.round(vote.restaurant.rating))" :key="index"><i
-                  class="fa-regular fa-star"></i></span>({{ vote.restaurant.user_ratings_total }})</p>
-            <p class="m-0 text-start">{{ vote.restaurant.types[0] }} <span v-if="vote.restaurant.price_level">-
-              </span><span v-for="index in vote.restaurant.price_level" :key="index"><i
-                  class="fa-solid fa-yen-sign"></i></span>
-            </p>
-          </div> -->
-
     </div>
 
     <div class="carousel-control">
@@ -67,7 +47,7 @@
 
 <script>
 import axios from 'axios'
-import VoteCardInfo from './VoteSession/VoteCardInfo.vue'
+import VoteCardInfo from './VoteCardInfo.vue'
 
 export default {
   name: 'VotingCard',

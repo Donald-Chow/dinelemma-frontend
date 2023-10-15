@@ -30,7 +30,7 @@
 
 <script>
 import axios from 'axios';
-import VotingCard from '@/components/VotingCard.vue';
+import VotingCard from '@/components/VoteSession/VotingCard.vue';
 import { createConsumer } from '@rails/actioncable';
 
 export default {
