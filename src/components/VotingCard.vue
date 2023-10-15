@@ -2,23 +2,22 @@
   <div class="voting-card">
 
     <div class="carousel-inner">
-      <!-- <div v-if="photosUrls.length != 0">
+      <div v-if="photosUrls.length != 0">
         <div v-for="(photo, index) in photosUrls" :key="index"
           :class="['carousel-item', { 'active': index === activePhotoIndex }]">
-          <img :src="photo" class="d-block w-100" :alt="'photo-slide' + index">
+          <img :src="photo" :alt="'photo-slide' + index">
           <div class="img-filter"></div>
-          <VoteCardInfo :restaurant="vote.restaurant" />
+          <!-- <VoteCardInfo :restaurant="vote.restaurant" /> -->
         </div>
-      </div> -->
-      <div>
-        <!-- v-else -->
+      </div>
+      <div v-else>
         <div class="carousel-item active">
           <img
             :src="'https://source.unsplash.com/featured/?' + vote.restaurant.category + '&' + Math.floor(Math.random() * 1000)">
           <div class="img-filter"></div>
-          <VoteCardInfo :restaurant="vote.restaurant" />
         </div>
       </div>
+      <VoteCardInfo :restaurant="vote.restaurant" />
       <!-- <img
             :src="'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1080&photo_reference=' + photo.photo_reference + '&key=' + googleApiKey"
             class="d-block w-100"> -->
@@ -43,10 +42,8 @@
 
     <div class="carousel-control">
       <button class="carousel-control-prev" type="button" @click="prev">
-        <!-- <span class="visually-hidden">Previous</span> -->
       </button>
       <button class="carousel-control-next" type="button" @click="next">
-        <!-- <span class="visually-hidden">Next</span> -->
       </button>
 
       <div class="voting-bar">
@@ -153,6 +150,10 @@ export default {
   animation: fadeinout 1s linear forwards;
 }
 
+.voting-card {
+  width: 100%
+}
+
 .voting-bar {
   display: flex;
   justify-content: space-around;
@@ -241,38 +242,45 @@ export default {
   }
 }
 
+.carousel-inner {
+  div {
+    // overflow-x: scroll;
+    // display: flex;
 
-.carousel-item {
-  height: 80vh;
-  position: relative;
-  display: none;
-  float: left;
-  width: 100%;
-  // margin-right: -100%;
-  // backface-visibility: hidden;
-  transition: transform 0.6s ease-in-out;
+    .carousel-item {
+      height: 80vh;
+      position: relative;
+      display: none;
+      float: left;
+      width: 100%;
+      // transition: transform 0.6s ease-in-out;
 
-  &.active {
-    display: block
-  }
+      &.active {
+        display: block;
+      }
 
-  .img-filter {
-    position: absolute;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
-    height: 50%;
-    width: 100%;
-    bottom: 0;
-    left: 0;
-    border-radius: 0px 10px 10px;
-  }
 
-  img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-    border-radius: 10px;
+      .img-filter {
+        position: absolute;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+        height: 50%;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+        border-radius: 0px 10px 10px;
+      }
+
+      img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+      }
+    }
   }
 }
+
+
 
 .active {
   display: block;
@@ -301,20 +309,22 @@ export default {
   border-radius: 50px;
   width: 50px;
   height: 50px;
+  font-weight: 600;
+  text-shadow: 1px 1px 2px rgb(0, 0, 0, 0.3);
 
   &.btn-yes {
-    border-color: green;
-    color: green;
+    border-color: rgb(62, 246, 188);
+    color: rgb(62, 246, 188);
   }
 
   &.btn-no {
-    border-color: red;
-    color: red;
+    border-color: rgb(255, 96, 52);
+    color: rgb(255, 96, 52);
   }
 
   &.btn-super {
-    border-color: blue;
-    color: blue;
+    border-color: rgb(69, 194, 239);
+    color: rgb(69, 194, 239);
   }
 }
 

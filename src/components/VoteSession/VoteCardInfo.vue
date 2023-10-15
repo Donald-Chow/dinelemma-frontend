@@ -1,6 +1,5 @@
 <template>
   <div class="carousel-caption">
-    <h1>hello</h1>
     <h5>{{ restaurant.name }}</h5>
     <p v-if="restaurant.category">Category: {{ restaurant.category }}</p>
     <p class="m-0 text-start">Rating: {{ restaurant.rating }} <span v-for="index in Math.floor(restaurant.rating)"
@@ -25,6 +24,7 @@ export default {
 .carousel-caption {
   position: absolute;
   // background-color: red;
+  display: block !important;
   right: 32px;
   bottom: 50px;
   left: 16px;
@@ -32,5 +32,17 @@ export default {
   padding-bottom: 1.25rem;
   color: #FCF1F2;
   text-align: start;
+
+  h5 {
+    font-size: 18px;
+    margin: 8px 0px;
+  }
+
+  p {
+    font-size: 14px;
+    margin: 4px 0px;
+
+  }
+
 }
 </style>
