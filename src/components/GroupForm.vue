@@ -1,42 +1,40 @@
 <template>
-  <div class="modal fade" id="newGroupForm" tabindex="-1" aria-labelledby="newGroupFormLabel" aria-hidden="true"
-    ref="newGroupModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="newGroupFormLabel">Create a group</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form @submit.prevent="submitForm">
-
-          <div class="modal-body">
-
-            <div class="mb-3">
-              <label for="name" class="form-label" required>
-                <h3>Group Name</h3>
-              </label>
-              <input type="text" class="form-control" id="name" v-model="groupName" aria-describedby="inputGroupPrepend2"
-                required>
-            </div>
-
-            <div class="user-list" v-for="user in users" :key="user.id">
-              <div class="form-check form-check-reverse text-center">
-                <input class="form-check-input" type="checkbox" v-model="selectedUsers" :value="user.id"
-                  :id="'userCheckbox' + user.id">
-                <label class="form-check-label" :for="'userCheckbox' + user.id">
-                  <i class="fa-solid fa-user-tie"></i> {{ user.username }}
-                </label>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="modal-footer">
-            <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button> -->
-            <button type="submit" class="btn btn-primary">Create</button>
-          </div>
-        </form>
+  <div class="modal-background" @click="emitCloseForm">
+    <div class="modal-content">
+      <!-- <button type="button"> X </button> -->
+      <div class="modal-header">
+        <h1>Create a group</h1>
       </div>
+
+      <form @submit.prevent="submitForm">
+
+        <div class="modal-body">
+
+          <div>
+            <label for="name" class="form-label" required>
+              <h3>Group Name</h3>
+            </label>
+            <input type="text" class="form-control" id="name" v-model="groupName" aria-describedby="inputGroupPrepend2"
+              required>
+          </div>
+
+          <div class="user-list" v-for="user in users" :key="user.id">
+            <div class="form-check form-check-reverse text-center">
+              <input class="form-check-input" type="checkbox" v-model="selectedUsers" :value="user.id"
+                :id="'userCheckbox' + user.id">
+              <label class="form-check-label" :for="'userCheckbox' + user.id">
+                <i class="fa-solid fa-user-tie"></i> {{ user.username }}
+              </label>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button> -->
+          <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+      </form>
     </div>
   </div>
 </template>
@@ -73,19 +71,56 @@ export default {
       } catch (error) {
         console.error('Error creating group:', error);
       }
+    },
+    emitCloseForm() {
+      this.$emit('closeForm')
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
+.modal-background {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgb(0, 0, 0, 0.3);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.modal-content {
+  // background-color: purple;
+  background-color: $gray;
+
+  margin: 16px;
+  border-radius: 8px;
+
+  .modal-header {
+    // background-color: green;
+  }
+
+  .modal-body {
+    // background-color: blue;
+  }
+
+  .modal-footer {
+    // background-color: pink;
+  }
+}
+
 .user-list {
-  height: 80px;
-  background-color: $main2;
+  height: 48px;
+  background-color: $light-gray;
   display: flex;
   flex-direction: column;
   justify-content: center;
   font-size: 18px;
-  padding: 0px 8px 0px 8px
+  padding: 0px 8px 0px 8px;
+  border-bottom: 1px solid $primary;
+  color: $text-primary;
 }
 </style>

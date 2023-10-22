@@ -19,7 +19,7 @@
   </div>
 
   <!-- Modal -->
-  <GroupForm :users="users" @notice="emitNotice" v-if="showForm" />
+  <GroupForm :users="users" @notice="emitNotice" v-if="showForm" @closeForm="toggleNewGroup" />
 </template>
 
 <script>
