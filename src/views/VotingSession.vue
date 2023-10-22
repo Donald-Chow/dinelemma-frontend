@@ -30,7 +30,7 @@
 
 <script>
 import axios from 'axios';
-import VotingCard from '@/components/VotingCard.vue';
+import VotingCard from '@/components/VoteSession/VotingCard.vue';
 import { createConsumer } from '@rails/actioncable';
 
 export default {
@@ -57,9 +57,9 @@ export default {
     // this.getVotes()
     this.subscribeToChannel();
   },
-  watch: {
-    'restaurant': this.getPhotoUrl
-  },
+  // watch: {
+  //   'restaurant': this.getPhotoUrl
+  // },
   methods: {
     async getSession() {
       try {
@@ -111,22 +111,24 @@ export default {
       }
     },
     async getPhotoUrl() {
-      const request = {
-        placeId: this.restaurant.place_id,
-        fields: ['photo']
-      };
-      // eslint-disable-next-line no-undef
-      const placesService = new google.maps.places.PlacesService(document.getElementById('google_vote'))
-      placesService.getDetails(request, (results, status) => {
+      if (this.restaurant) {
+        const request = {
+          placeId: this.restaurant.place_id,
+          fields: ['photo']
+        };
         // eslint-disable-next-line no-undef
-        if (status === google.maps.places.PlacesServiceStatus.OK) {
-          if (results.photos) {
-            this.restaurantImageURL = results.photos[0].getUrl({ maxWidth: 1080, maxHeight: 1080 })
+        const placesService = new google.maps.places.PlacesService(document.getElementById('google_vote'))
+        placesService.getDetails(request, (results, status) => {
+          // eslint-disable-next-line no-undef
+          if (status === google.maps.places.PlacesServiceStatus.OK) {
+            if (results.photos) {
+              this.restaurantImageURL = results.photos[0].getUrl({ maxWidth: 1080, maxHeight: 1080 })
+            }
+          } else {
+            console.error('Places search failed with status:', status);
           }
-        } else {
-          console.error('Places search failed with status:', status);
-        }
-      });
+        });
+      }
     }
   },
 }

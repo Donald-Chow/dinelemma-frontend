@@ -1,15 +1,13 @@
 <template>
   <div>
-    <h4>Restaurant Lists</h4>
+    <h2>Restaurant Lists</h2>
     <div class="list">
-      <div class="form">
-        <input class="m-0 p-2 text-start bg-white" v-model="newListName" placeholder="New list" required />
-        <button @click="createAndAddToList(newListName)">Create</button>
-      </div>
+      <form class="form" @submit.prevent="createAndAddToList">
+        <input v-model="newListName" placeholder="New list" required />
+        <button type="submit">Create</button>
+      </form>
       <div v-for=" list in localLists" :key="list.name" @click="addToList(list)">
-        <div>
-          <h2 class="m-0 p-2 text-start">{{ list.name }}</h2>
-        </div>
+        <h4>{{ list.name }}</h4>
       </div>
     </div>
   </div>
@@ -61,36 +59,57 @@ export default {
 </script>
 
 <style scoped lang="scss">
-h4 {
-  color: $primary
+h2 {
+  color: $primary;
+  font-size: 26px;
+  padding: 4px 4px 8px;
 }
 
 .form {
   display: flex;
+  border-bottom: 1px solid $gray;
 
-  input {
-    padding: 0px;
-    background-color: $white;
-    border: 0px;
-    text-align: center;
-    font-size: calc(1.325rem + 0.9vw);
-    line-height: 1.2;
-    color: $primary;
+  &:focus-within {
+    // border: 3px solid #555;
     width: 100%;
 
-    &:focus {
-      border: 3px solid #555;
-      width: 100%
+    button {
+      display: block;
     }
+  }
+
+  input {
+    border: 0px;
+    width: 100%;
+    color: inherit;
+    background-color: inherit;
+    padding: 2px 2px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 800;
+    font-family: inherit;
   }
 }
 
 button {
-  // position: absolute;
-  // left: -9999px;
   background-color: $main1;
   border: none;
-  width: 25%
+  width: 25%;
+  display: none;
+}
+
+h4 {
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.list {
+  background-color: $white;
+
+  div {
+    border-bottom: 1px solid $text-primary;
+    padding: 4px;
+  }
 }
 
 .list {
