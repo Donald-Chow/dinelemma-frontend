@@ -1,7 +1,8 @@
 <template>
-  <div class="modal-background" @click="emitCloseForm">
+  <!-- <div class="modal-background" @click="emitCloseForm"> -->
+  <div class="modal-background">
     <div class="modal-content">
-      <!-- <button type="button"> X </button> -->
+      <button type="button" @click="emitCloseForm"> X </button>
       <div class="modal-header">
         <h1>Create a group</h1>
       </div>
@@ -19,11 +20,11 @@
           </div>
 
           <div class="user-list" v-for="user in users" :key="user.id">
-            <div class="form-check form-check-reverse text-center">
-              <input class="form-check-input" type="checkbox" v-model="selectedUsers" :value="user.id"
-                :id="'userCheckbox' + user.id">
-              <label class="form-check-label" :for="'userCheckbox' + user.id">
+            <div class="user-list-user">
+              <input type="checkbox" v-model="selectedUsers" :value="user.id" :id="'userCheckbox' + user.id">
+              <label :for="'userCheckbox' + user.id">
                 <i class="fa-solid fa-user-tie"></i> {{ user.username }}
+                <div class="dot"></div>
               </label>
             </div>
           </div>
@@ -122,5 +123,45 @@ export default {
   padding: 0px 8px 0px 8px;
   border-bottom: 1px solid $primary;
   color: $text-primary;
+
+  .user-list-user {
+    // padding: 32px;
+    width: 100%;
+    height: 100%;
+
+    label {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    .dot {
+      display: inline-block;
+      border-radius: 50%;
+      background-color: $white;
+      border: solid 1px $gray;
+      width: 24px;
+      height: 24px;
+      transition: 0.2s;
+    }
+
+    input {
+      display: none;
+    }
+
+    input[type="checkbox"]:checked+label {
+
+      // background-color: red;
+      .dot {
+        background-color: $green;
+
+        &::before {
+          content: "✔";
+        }
+      }
+    }
+  }
 }
 </style>
