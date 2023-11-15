@@ -2,7 +2,7 @@
   <!-- <div class="modal-background" @click="emitCloseForm"> -->
   <div class="modal-background">
     <div class="modal-content">
-      <button type="button" @click="emitCloseForm"> X </button>
+      <button class="close-button" type="button" @click="emitCloseForm"> <i class="fa-solid fa-xmark"></i> </button>
       <div class="modal-header">
         <h1>Create a group</h1>
       </div>
@@ -12,11 +12,10 @@
         <div class="modal-body">
 
           <div>
-            <label for="name" class="form-label" required>
+            <!-- <label for="name" required>
               <h3>Group Name</h3>
-            </label>
-            <input type="text" class="form-control" id="name" v-model="groupName" aria-describedby="inputGroupPrepend2"
-              required>
+            </label> -->
+            <input type="text" id="name" v-model="groupName" placeholder='Group Name' required>
           </div>
 
           <div class="user-list" v-for="user in users" :key="user.id">
@@ -33,7 +32,7 @@
 
         <div class="modal-footer">
           <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button> -->
-          <button type="submit" class="btn btn-primary">Create</button>
+          <ButtonSmall type="submit" text="Start Now" />
         </div>
       </form>
     </div>
@@ -42,6 +41,7 @@
 
 <script>
 import axios from 'axios'
+import ButtonSmall from './Shared/ButtonSmall.vue';
 
 export default {
   name: 'GroupForm',
@@ -50,7 +50,7 @@ export default {
     return {
       groupName: '',
       selectedUsers: []
-    }
+    };
   },
   methods: {
     async submitForm() {
@@ -65,18 +65,20 @@ export default {
         // newGroupModal.hide()
         const backdrops = document.querySelectorAll('.modal-backdrop');
         if (backdrops) {
-          backdrops.forEach(backdrop => { backdrop.remove(); })
+          backdrops.forEach(backdrop => { backdrop.remove(); });
         }
-        this.$emit('notice', "Group Created")
+        this.$emit('notice', "Group Created");
         this.$router.push({ name: 'GroupDetails', params: { id: response.data.group.id } });
-      } catch (error) {
+      }
+      catch (error) {
         console.error('Error creating group:', error);
       }
     },
     emitCloseForm() {
-      this.$emit('closeForm')
+      this.$emit('closeForm');
     }
-  }
+  },
+  components: { ButtonSmall }
 }
 </script>
 
@@ -96,6 +98,7 @@ export default {
 .modal-content {
   // background-color: purple;
   background-color: $gray;
+  position: relative;
 
   margin: 16px;
   border-radius: 8px;
@@ -110,6 +113,25 @@ export default {
 
   .modal-footer {
     // background-color: pink;
+  }
+}
+
+h1 {
+  margin: 8px
+}
+
+input[type="text"] {
+  width: 90%;
+  margin: 8px 0px;
+  height: 28px;
+  background: $medium-gray;
+  border: 1px solid $gray;
+  border-radius: 4px;
+  font-size: 24px;
+  color: $text-primary;
+
+  &:focus {
+    outline-color: $primary;
   }
 }
 
@@ -155,7 +177,7 @@ export default {
 
       // background-color: red;
       .dot {
-        background-color: $green;
+        background-color: $primary;
 
         &::before {
           content: "✔";
@@ -163,5 +185,17 @@ export default {
       }
     }
   }
+}
+
+.close-button {
+  background-color: $primary-darken;
+  border: none;
+  border-radius: 4px;
+  color: $text-primary;
+  width: 28px;
+  height: 28px;
+  position: absolute;
+  right: 4px;
+  top: 4px;
 }
 </style>

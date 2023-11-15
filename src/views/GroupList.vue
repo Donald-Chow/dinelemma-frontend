@@ -7,7 +7,7 @@
       <form class="search-bar" @submit.prevent="filterGroups">
         <input class="search-bar" type="text" placeholder="Search" v-model="searchInput" @input="filterGroups">
       </form>
-      <button type="button" @click.prevent="toggleNewGroup">
+      <button class="add-button" type="button" @click.prevent="toggleNewGroup">
         <i class="fa-solid fa-plus"></i>
       </button>
     </div>
@@ -78,6 +78,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+h1 {
+  margin: 16px;
+}
+
 .search-bar-wrapper {
   display: flex;
   justify-content: space-between;
@@ -94,7 +98,23 @@ export default {
       border-radius: 4px;
       padding: 6px;
       width: 100%;
+      height: 24px;
+      font-family: inherit;
+      font-size: 20px;
+
+      &:focus {
+        outline-color: $primary;
+      }
     }
   }
+}
+
+.add-button {
+  background-color: $primary;
+  border: none;
+  border-radius: 4px;
+  color: $white;
+  width: 36px;
+  height: 36px;
 }
 </style>
