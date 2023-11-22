@@ -3,12 +3,16 @@
     <h1>Profile!</h1>
     <h2>Username: {{ user.username }}</h2>
     <h2>Email: {{ user.email }}</h2>
-    <button @click="handleLogout" class="btn btn-primary btn-lg">Log out! <i
-        class="fa-solid fa-arrow-right-from-bracket"></i></button>
+
+    <div @click="handleLogout">
+      <ButtonWarning text="Log out!" />
+      <!-- Log out! <i class="fa-solid fa-arrow-right-from-bracket"></i> -->
+    </div>
   </div>
 </template>
 
 <script>
+import ButtonWarning from '@/components/Shared/ButtonWarning.vue';
 import axios from 'axios'
 import { mapGetters } from 'vuex'
 
@@ -17,6 +21,10 @@ export default {
   computed: {
     ...mapGetters(['user'])
   },
+  components: {
+    ButtonWarning
+  }
+  ,
   methods: {
     async handleLogout() {
       await localStorage.removeItem('Authorization');
