@@ -8,23 +8,22 @@
 
 <script>
 export default {
-  name: 'ButtonSmall',
+  name: 'ButtonWarning',
   props: ['text']
 }
 </script>
 
 <style scoped lang="scss">
 .btn-primary {
-  background-color: $primary;
+  background-color: $red;
   color: $white;
   border-radius: 50px;
-  height: 36px;
-  width: 200px;
+  height: 48px;
+  width: 270px;
   text-align: center;
   font-family: inherit;
-  font-size: 14px;
+  font-size: 18px;
   border: none;
-  margin: 12px;
 
   transition: background-color .15s ease-in-out;
 
