@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button class="btn-primary">
+    <button class="btn-small">
       {{ text }}
     </button>
   </div>
@@ -14,7 +14,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.btn-primary {
+.btn-small {
   background-color: $primary;
   color: $white;
   border-radius: 50px;
