@@ -4,21 +4,34 @@
   </div>
 
   <ButtonPrimary text="Start a Session" @click="toggleNewSession"></ButtonPrimary>
-  <!-- <div class="card" v-if="sessionFormShow">
-    <h2>Start a Session</h2>
-    <form @submit.prevent="createSession">
-      <label for="restaurantList" class="form-label">Select a List:</label>
-      <select v-model="selectedList" id="restaurantList" class="form-select mb-3" required>
-        <option value="" disabled>Select an option</option>
-        <option v-for="list in lists" :key="list.id" :value="list.id">
-          {{ list.name }}
-        </option>
-      </select>
-      <div>
-        <button type="submit" class="btn btn-primary btn-lg">START A SESSION</button>
+  <!-- TO UPDATE THIS FORM -->
+  <div class="card" v-if="sessionFormShow">
+    <div class="modal-background" @click="toggleNewSession" />
+    <div class="modal">
+      <div class="session-form">
+        <h2>Start a Session</h2>
+        <form @submit.prevent="createSession">
+          <div>
+            <label for="restaurantList">Select a List:</label>
+          </div>
+          <div>
+            <select v-model="selectedList" id="restaurantList" required>
+              <option value="" disabled>----------</option>
+              <option v-for="list in lists" :key="list.id" :value="list.id">
+                {{ list.name }}
+              </option>
+            </select>
+          </div>
+          <div>
+            <div type="submit">
+              <ButtonSmall text="Start voting away!"></ButtonSmall>
+            </div>
+          </div>
+        </form>
       </div>
-    </form>
-  </div> -->
+    </div>
+  </div>
+  <!-- ends here -->
   <div style="margin-top:16px;" class="border-bottom"></div>
   <div class="category" @click="toggleMemberExpand">
     <h4>Members ({{ members.length }})</h4>
@@ -56,6 +69,7 @@
 import axios from 'axios'
 import { createConsumer } from '@rails/actioncable'
 import ButtonPrimary from '@/components/Shared/ButtonPrimary.vue'
+import ButtonSmall from '@/components/Shared/ButtonSmall.vue'
 
 export default {
   name: 'GroupDetails',
@@ -74,7 +88,8 @@ export default {
     }
   },
   components: {
-    ButtonPrimary
+    ButtonPrimary,
+    ButtonSmall
   },
   async mounted() {
     await this.fetchGroupDetails();
@@ -148,6 +163,29 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.modal-background {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgb(0, 0, 0, 0.3);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  width: 80%;
+}
+
+.session-form {
+  background-color: $gray;
+  margin: 16px;
+  border-radius: 8px;
+}
+
 .heading {
   margin: 16px;
 }
@@ -169,6 +207,30 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+
+select {
+  width: 80%;
+  height: 36px;
+  font-size: 18px;
+  background-color: $light-gray;
+  font-family: inherit;
+  color: $text-primary;
+
+  &:focus {
+    border-color: $primary;
+  }
+}
+
+form {
+  div {
+    margin: 0px 0px 8px;
+  }
+}
+
+h2 {
+  margin: 16px 0px;
 }
 
 h4 {
