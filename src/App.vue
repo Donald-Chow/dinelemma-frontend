@@ -14,8 +14,8 @@
 
 <script>
 import axios from 'axios'
-import NavBar from './components/NavBar.vue'
-import HeaderBar from './components/HeaderBar.vue'
+import NavBar from './components/Shared/NavBar.vue'
+import HeaderBar from './components/Shared/HeaderBar.vue'
 import NoticeFlash from './components/NoticeFlash.vue'
 import AlertFlash from './components/AlertFlash.vue'
 
@@ -71,7 +71,8 @@ export default {
   // padding-top: 16px;
   // padding-bottom: 8vh;
   width: 80%;
-  margin: 60px auto 50px;
+  // margin: 60px auto 50px;
+  margin: 80px auto 50px;
   text-align: center;
 }
 

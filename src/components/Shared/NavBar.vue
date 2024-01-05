@@ -25,18 +25,20 @@ export default {
 
 <style lang="scss">
 nav {
-  background-color: $main1;
+  background-color: $white;
   // padding: 16px 0px;
   position: fixed;
   bottom: 0;
   width: 100%;
+  box-shadow: 0px 0px 6px rgb(180, 180, 180, 0.4);
+
 
   a {
     font-weight: bold;
-    color: $main3;
+    color: $primary;
 
     &.router-link-exact-active {
-      color: $main0;
+      color: $text-primary;
     }
   }
 }

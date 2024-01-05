@@ -72,6 +72,7 @@ h2 {
   &:focus-within {
     // border: 3px solid #555;
     width: 100%;
+
     button {
       display: block;
     }
@@ -108,6 +109,14 @@ h4 {
   div {
     border-bottom: 1px solid $text-primary;
     padding: 4px;
+  }
+}
+
+.list {
+  background-color: $white;
+
+  div {
+    border-bottom: 1px solid $text-primary;
   }
 }
 

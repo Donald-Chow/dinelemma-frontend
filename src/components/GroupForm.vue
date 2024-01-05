@@ -1,48 +1,47 @@
 <template>
-  <div class="modal fade" id="newGroupForm" tabindex="-1" aria-labelledby="newGroupFormLabel" aria-hidden="true"
-    ref="newGroupModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="newGroupFormLabel">Create a group</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form @submit.prevent="submitForm">
-
-          <div class="modal-body">
-
-            <div class="mb-3">
-              <label for="name" class="form-label" required>
-                <h3>Group Name</h3>
-              </label>
-              <input type="text" class="form-control" id="name" v-model="groupName" aria-describedby="inputGroupPrepend2"
-                required>
-            </div>
-
-            <div class="user-list" v-for="user in users" :key="user.id">
-              <div class="form-check form-check-reverse text-center">
-                <input class="form-check-input" type="checkbox" v-model="selectedUsers" :value="user.id"
-                  :id="'userCheckbox' + user.id">
-                <label class="form-check-label" :for="'userCheckbox' + user.id">
-                  <i class="fa-solid fa-user-tie"></i> {{ user.username }}
-                </label>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="modal-footer">
-            <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button> -->
-            <button type="submit" class="btn btn-primary">Create</button>
-          </div>
-        </form>
+  <!-- <div class="modal-background" @click="emitCloseForm"> -->
+  <div class="modal-background">
+    <div class="modal-content">
+      <button class="close-button" type="button" @click="emitCloseForm"> <i class="fa-solid fa-xmark"></i> </button>
+      <div class="modal-header">
+        <h1>Create a group</h1>
       </div>
+
+      <form @submit.prevent="submitForm">
+
+        <div class="modal-body">
+
+          <div>
+            <!-- <label for="name" required>
+              <h3>Group Name</h3>
+            </label> -->
+            <input type="text" id="name" v-model="groupName" placeholder='Group Name' required>
+          </div>
+
+          <div class="user-list" v-for="user in users" :key="user.id">
+            <div class="user-list-user">
+              <input type="checkbox" v-model="selectedUsers" :value="user.id" :id="'userCheckbox' + user.id">
+              <label :for="'userCheckbox' + user.id">
+                <i class="fa-solid fa-user-tie"></i> {{ user.username }}
+                <div class="dot"></div>
+              </label>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button> -->
+          <ButtonSmall type="submit" text="Start Now" />
+        </div>
+      </form>
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import ButtonSmall from './Shared/ButtonSmall.vue';
 
 export default {
   name: 'GroupForm',
@@ -51,7 +50,7 @@ export default {
     return {
       groupName: '',
       selectedUsers: []
-    }
+    };
   },
   methods: {
     async submitForm() {
@@ -66,26 +65,137 @@ export default {
         // newGroupModal.hide()
         const backdrops = document.querySelectorAll('.modal-backdrop');
         if (backdrops) {
-          backdrops.forEach(backdrop => { backdrop.remove(); })
+          backdrops.forEach(backdrop => { backdrop.remove(); });
         }
-        this.$emit('notice', "Group Created")
+        this.$emit('notice', "Group Created");
         this.$router.push({ name: 'GroupDetails', params: { id: response.data.group.id } });
-      } catch (error) {
+      }
+      catch (error) {
         console.error('Error creating group:', error);
       }
+    },
+    emitCloseForm() {
+      this.$emit('closeForm');
     }
-  }
+  },
+  components: { ButtonSmall }
 }
 </script>
 
 <style scoped lang="scss">
+.modal-background {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgb(0, 0, 0, 0.3);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.modal-content {
+  // background-color: purple;
+  background-color: $gray;
+  position: relative;
+
+  margin: 16px;
+  border-radius: 8px;
+
+  .modal-header {
+    // background-color: green;
+  }
+
+  .modal-body {
+    // background-color: blue;
+  }
+
+  .modal-footer {
+    // background-color: pink;
+  }
+}
+
+h1 {
+  margin: 8px
+}
+
+input[type="text"] {
+  width: 90%;
+  margin: 8px 0px;
+  height: 28px;
+  background: $medium-gray;
+  border: 1px solid $gray;
+  border-radius: 4px;
+  font-size: 24px;
+  color: $text-primary;
+
+  &:focus {
+    outline-color: $primary;
+  }
+}
+
 .user-list {
-  height: 80px;
-  background-color: $main2;
+  height: 48px;
+  background-color: $light-gray;
   display: flex;
   flex-direction: column;
   justify-content: center;
   font-size: 18px;
-  padding: 0px 8px 0px 8px
+  padding: 0px 8px 0px 8px;
+  border-bottom: 1px solid $primary;
+  color: $text-primary;
+
+  .user-list-user {
+    // padding: 32px;
+    width: 100%;
+    height: 100%;
+
+    label {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    .dot {
+      display: inline-block;
+      border-radius: 50%;
+      background-color: $white;
+      border: solid 1px $gray;
+      width: 24px;
+      height: 24px;
+      transition: 0.2s;
+    }
+
+    input {
+      display: none;
+    }
+
+    input[type="checkbox"]:checked+label {
+
+      // background-color: red;
+      .dot {
+        background-color: $primary;
+
+        &::before {
+          content: "✔";
+        }
+      }
+    }
+  }
+}
+
+.close-button {
+  background-color: $primary-darken;
+  border: none;
+  border-radius: 4px;
+  color: $text-primary;
+  width: 28px;
+  height: 28px;
+  position: absolute;
+  right: 4px;
+  top: 4px;
 }
 </style>
