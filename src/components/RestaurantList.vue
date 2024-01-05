@@ -8,9 +8,17 @@
       </form>
       <div v-for=" list in localLists" :key="list.name" @click="addToList(list)">
         <h4>{{ list.name }}</h4>
+        <h2>Restaurant Lists</h2>
+        <div class="list">
+          <form class="form" @submit.prevent="createAndAddToList">
+            <input v-model="newListName" placeholder="New list" required />
+            <button type="submit">Create</button>
+          </form>
+          <div v-for=" list in localLists" :key="list.name" @click="addToList(list)">
+            <h4>{{ list.name }}</h4>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 </template>
 
 <script>
