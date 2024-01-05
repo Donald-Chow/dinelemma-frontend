@@ -1,41 +1,41 @@
 <template>
-  <div class="border p-4 bg-light">
-    <form class="h-100 d-flex flex-column justify-content-center" @click.prevent="handleSubmit">
-      <ErrorAlert v-if="error" :error="error" />
-      <h1 class="mb-3">Sign up now!</h1>
-      <div class="text-center mb-3">No credit card required!.</div>
-      <div class="mb-3">
-        <input type="email" class="form-control" v-model="email" placeholder="Email">
-      </div>
-      <div class="mb-3">
-        <input type="password" class="form-control" v-model="password" placeholder="Password">
-      </div>
-      <div class="d-flex justify-content-end mb-3">
-
-        <p>By creating an account, you agree to the Dinelemma Privacy Policy and Terms of Service.</p>
-      </div>
-      <div class="d-grid">
-        <button type="submit" class="btn btn-primary btn-lg">Start now</button>
-      </div>
-    </form>
-  </div>
+  <form class="signup-form" @click.prevent="handleSubmit">
+    <h2>Sign up now!</h2>
+    <h3>No credit card required!.</h3>
+    <div class="form-input">
+      <label for="email">Your email</label>
+      <input type="email" name="email" v-model="email" :class="{ invalid }">
+    </div>
+    <div class="form-input">
+      <label for="password">Password</label>
+      <input type="password" name="password" v-model="password" :class="{ invalid }">
+    </div>
+    <ErrorAlert v-if="error" :error="error" />
+    <p>By creating an account, you agree to the Dinelemma Privacy Policy and Terms of Service.</p>
+    <div class="form-button">
+      <ButtonPrimary type="submit" text="Start Now" />
+    </div>
+  </form>
 </template>
 
 <script>
 import axios from 'axios'
 import ErrorAlert from './ErrorAlert.vue'
+import ButtonPrimary from './Shared/ButtonPrimary.vue'
 
 export default {
-  name: 'SigninForm',
+  name: 'SignupForm',
   data() {
     return {
       email: '',
       password: '',
-      error: ''
+      error: '',
+      invalid: false
     }
   },
   components: {
-    ErrorAlert
+    ErrorAlert,
+    ButtonPrimary
   },
   methods: {
     async handleSubmit() {
@@ -53,6 +53,7 @@ export default {
         this.$router.push('/');
       } catch (error) {
         this.error = "Something went wrong while registering"
+        this.invalid = true
       }
     }
   }
@@ -61,7 +62,42 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-a {
-  color: $primary;
+.signup-form {
+  .form-input {
+    width: 100%;
+
+    input {
+      border: 0px;
+      border-bottom: 1px solid $gray;
+      width: 100%;
+      color: inherit;
+      background-color: inherit;
+      padding: 2px 2px;
+      font-size: 18px;
+
+      &:focus {
+        outline-color: $primary;
+      }
+
+      &.invalid {
+        border-bottom: 1px solid $red;
+      }
+    }
+
+    label {
+      text-align: start;
+      font-size: 12px;
+      color: $medium-gray;
+
+    }
+  }
+}
+
+p {
+  text-align: center;
+}
+
+h3 {
+  margin-bottom: 12px;
 }
 </style>
