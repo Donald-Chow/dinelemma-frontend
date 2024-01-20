@@ -1,7 +1,8 @@
 <template>
   <div class="alert alert-warning alert-dismissible fade show m-1" role="alert">
     {{ notice }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" @click="dismissNotice">
+    <button @click="dismissNotice">
+      X
     </button>
   </div>
 </template>
@@ -17,3 +18,17 @@ export default {
   },
 }
 </script>
+
+<style scoped lang="scss">
+.alert {
+  background-color: $yellow;
+  padding: 8px;
+  border-radius: 6px;
+  color: $white;
+
+  button {
+    background: none;
+    border: none
+  }
+}
+</style>
