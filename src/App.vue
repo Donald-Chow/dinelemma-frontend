@@ -39,6 +39,9 @@ export default {
     showNotice(notice) {
       this.notice = notice;
       this.isNoticeVisible = true;
+      setTimeout(() => {
+        this.isNoticeVisible = false;
+      }, 15000);
     },
     dismissNotice() {
       this.isNoticeVisible = false;

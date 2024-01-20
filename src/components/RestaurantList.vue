@@ -26,9 +26,11 @@ export default {
     }
   },
   methods: {
+    dismissList() {
+      this.$emit('dismissList');
+    },
     async createAndAddToList() {
       try {
-
         const response = await axios.post('restaurant_lists', {
           name: this.newListName
         })
@@ -36,6 +38,7 @@ export default {
         this.$emit('notice', `Created list: "${this.newListName}"`)
         this.localLists.unshift(response.data.list)
         this.resetList()
+        this.dismissList()
       } catch (error) {
         console.error('Error creating and adding to the list:', error);
       }
@@ -49,8 +52,9 @@ export default {
           restaurant: this.restaurant
         })
         console.log(response);
-        if (response.statusText === "OK") {
+        if (response.status === 200) {
           this.$emit('notice', `Added to ${list.name}`)
+          this.dismissList()
         }
       } catch (error) {
         console.error('Error creating and adding to the list:', error);
