@@ -1,9 +1,87 @@
 <!DOCTYPE html>
 <html lang="">
   <head>
+    <title>Dinelemma</title>
+
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+
+    <!-- Meta data -->
+    <meta
+      name="description"
+      content="Help indecisive people choose where to eat."
+    />
+    <!-- Facebook Open Graph data -->
+    <meta property="og:title" content="Dinelemma" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="<%= BASE_URL %>" />
+    <!-- <meta property="og:image" content=" IMAGE "> -->
+    <meta
+      property="og:description"
+      content="Help indecisive people choose where to eat."
+    />
+    <meta property="og:site_name" content="Dinelemma" />
+    <!-- Twitter Card data -->
+    <!-- <meta name="twitter:card" content="summary_large_image"> -->
+    <!-- <meta name="twitter:site" content="DEFAULT_META["twitter_account"]>"> -->
+    <meta name="twitter:title" content="Dinelemma" />
+    <meta
+      name="twitter:description"
+      content="Help indecisive people choose where to eat."
+    />
+    <!-- <meta name="twitter:creator" content="DEFAULT_META["twitter_account"]"> -->
+    <!-- <meta name="twitter:image:src" content=" IMAGE "> -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Icon -->
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="114x114"
+      href="/apple-icon-114x114.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="/apple-icon-120x120.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="144x144"
+      href="/apple-icon-144x144.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="/apple-icon-152x152.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/apple-icon-180x180.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="/android-icon-192x192.png"
+    />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
+    <meta name="theme-color" content="#ffffff" />
+
     <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
     <script
       src="https://kit.fontawesome.com/0928576c99.js"
@@ -13,7 +91,7 @@
       async
       src="https://maps.googleapis.com/maps/api/js?key=<%= process.env.VUE_APP_GOOGLE_API_KEY %>&libraries=places&callback=initMap"
     ></script>
-    <title><%= htmlWebpackPlugin.options.title %></title>
+    <!-- <title><%= htmlWebpackPlugin.options.title %></title> -->
   </head>
   <body>
     <noscript>
