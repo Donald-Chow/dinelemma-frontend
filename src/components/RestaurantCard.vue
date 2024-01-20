@@ -17,7 +17,7 @@
         </p>
       </div>
       <div v-if="listShow" class="restaurant-list">
-        <RestaurantList :restaurant="restaurant" :lists="lists" @closeList="listShow = false" @notice="emitNotice" />
+        <RestaurantList :restaurant="restaurant" :lists="lists" @dismissList="listShow = false" @notice="emitNotice" />
       </div>
       <div class="list-button">
         <button @click="this.listShow = !this.listShow">+</button>
