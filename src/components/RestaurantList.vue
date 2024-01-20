@@ -41,13 +41,20 @@ export default {
       }
     },
     async addToList(list) {
-      console.log(list);
-      console.log(this.restaurant);
-      const response = await axios.post('list_bookmarks', {
-        list_bookmark: { restaurant_list_id: list.id },
-        restaurant: this.restaurant
-      })
-      console.log(response);
+      // console.log(list);
+      // console.log(this.restaurant);
+      try {
+        const response = await axios.post('list_bookmarks', {
+          list_bookmark: { restaurant_list_id: list.id },
+          restaurant: this.restaurant
+        })
+        console.log(response);
+        if (response.statusText === "OK") {
+          this.$emit('notice', `Added to ${list.name}`)
+        }
+      } catch (error) {
+        console.error('Error creating and adding to the list:', error);
+      }
     },
     resetList() {
       // alert
