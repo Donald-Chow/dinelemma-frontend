@@ -1,13 +1,13 @@
 <template>
   <div>
-    Restaurant Lists
-    <div class="d-flex w-100 border-bottom">
-      <input class="m-0 p-2 text-start bg-white" v-model="newListName" placeholder="New list" required />
-      <button @click="createAndAddToList(newListName)">Create</button>
-    </div>
-    <div v-for=" list in localLists" :key="list.name" class="bg-white border-bottom" @click="addToList(list)">
-      <div>
-        <h2 class="m-0 p-2 text-start">{{ list.name }}</h2>
+    <h2>Restaurant Lists</h2>
+    <div class="list">
+      <form class="form" @submit.prevent="createAndAddToList">
+        <input v-model="newListName" placeholder="New list" required />
+        <button type="submit">Create</button>
+      </form>
+      <div v-for=" list in localLists" :key="list.name" @click="addToList(list)">
+        <h4>{{ list.name }}</h4>
       </div>
     </div>
   </div>
@@ -26,9 +26,11 @@ export default {
     }
   },
   methods: {
+    dismissList() {
+      this.$emit('dismissList');
+    },
     async createAndAddToList() {
       try {
-
         const response = await axios.post('restaurant_lists', {
           name: this.newListName
         })
@@ -36,18 +38,27 @@ export default {
         this.$emit('notice', `Created list: "${this.newListName}"`)
         this.localLists.unshift(response.data.list)
         this.resetList()
+        this.dismissList()
       } catch (error) {
         console.error('Error creating and adding to the list:', error);
       }
     },
     async addToList(list) {
-      console.log(list);
-      console.log(this.restaurant);
-      const response = await axios.post('list_bookmarks', {
-        list_bookmark: { restaurant_list_id: list.id },
-        restaurant: this.restaurant
-      })
-      console.log(response);
+      // console.log(list);
+      // console.log(this.restaurant);
+      try {
+        const response = await axios.post('list_bookmarks', {
+          list_bookmark: { restaurant_list_id: list.id },
+          restaurant: this.restaurant
+        })
+        console.log(response);
+        if (response.status === 200) {
+          this.$emit('notice', `Added to ${list.name}`)
+          this.dismissList()
+        }
+      } catch (error) {
+        console.error('Error creating and adding to the list:', error);
+      }
     },
     resetList() {
       // alert
@@ -59,29 +70,65 @@ export default {
 </script>
 
 <style scoped lang="scss">
-input {
-  padding: 0px;
-  background-color: inherit;
-  border: 0px;
-  font-family: "Raleway";
-  font-weight: 700;
-  font-size: calc(1.325rem + 0.9vw);
-  line-height: 1.2;
-  color: #2c3e50;
-  width: 100%;
+h2 {
+  color: $primary;
+  font-size: 26px;
+  padding: 4px 4px 8px;
+}
 
-  &:focus {
-    border: 3px solid #555;
-    width: 750%
+.form {
+  display: flex;
+  border-bottom: 1px solid $gray;
+
+  &:focus-within {
+    // border: 3px solid #555;
+    width: 100%;
+
+    button {
+      display: block;
+    }
+  }
+
+  input {
+    border: 0px;
+    width: 100%;
+    color: inherit;
+    background-color: inherit;
+    padding: 2px 2px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 800;
+    font-family: inherit;
   }
 }
 
 button {
-  // position: absolute;
-  // left: -9999px;
   background-color: $main1;
   border: none;
-  width: 25%
+  width: 25%;
+  display: none;
+}
+
+h4 {
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.list {
+  background-color: $white;
+
+  div {
+    border-bottom: 1px solid $text-primary;
+    padding: 4px;
+  }
+}
+
+.list {
+  background-color: $white;
+
+  div {
+    border-bottom: 1px solid $text-primary;
+  }
 }
 
 // input:focus+button {

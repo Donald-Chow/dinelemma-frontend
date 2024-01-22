@@ -1,48 +1,75 @@
 <template>
-  <div>
-    <h1>Group name: {{ group.name }}</h1>
+  <div class="heading">
+    <h1><i class="fa-solid fa-users"></i> {{ group.name }}</h1>
   </div>
 
-  <div class="card">
-    <h2>Start a Session</h2>
-    <form @submit.prevent="createSession">
-      <label for="restaurantList" class="form-label">Select a List:</label>
-      <select v-model="selectedList" id="restaurantList" class="form-select mb-3" required>
-        <option value="" disabled>Select an option</option>
-        <option v-for="list in lists" :key="list.id" :value="list.id">
-          {{ list.name }}
-        </option>
-      </select>
-      <div>
-        <button type="submit" class="btn btn-primary btn-lg">START A SESSION</button>
+  <ButtonPrimary text="Start a Session" @click="toggleNewSession"></ButtonPrimary>
+  <!-- TO UPDATE THIS FORM -->
+  <div class="card" v-if="sessionFormShow">
+    <div class="modal-background" @click="toggleNewSession" />
+    <div class="modal">
+      <div class="session-form">
+        <h2>Start a Session</h2>
+        <form @submit.prevent="createSession">
+          <div>
+            <label for="restaurantList">Select a List:</label>
+          </div>
+          <div>
+            <select v-model="selectedList" id="restaurantList" required>
+              <option value="" disabled>----------</option>
+              <option v-for="list in lists" :key="list.id" :value="list.id">
+                {{ list.name }}
+              </option>
+            </select>
+          </div>
+          <div>
+            <div type="submit">
+              <ButtonSmall text="Start voting away!"></ButtonSmall>
+            </div>
+          </div>
+        </form>
       </div>
-    </form>
+    </div>
   </div>
-
-  <h2 @click="toggleMemberExpand"><span v-if="!memberExpand"><i class="fa-solid fa-angle-right"></i></span> <span
-      v-if="memberExpand"><i class="fa-solid fa-angle-down"></i></span>Members ({{ members.length }})</h2>
-  <div v-for="member in   members  " :key="'member' + member.id" :class="{ 'd-none': !memberExpand, 'card': true }">
-    <h3>
-      <i class="fa-solid fa-circle-user"></i> {{ member.username }}
-    </h3>
+  <!-- ends here -->
+  <div style="margin-top:16px;" class="border-bottom"></div>
+  <div class="category" @click="toggleMemberExpand">
+    <h4>Members ({{ members.length }})</h4>
+    <p v-if="memberExpand"><i class="fa-solid fa-angle-down"></i></p>
+    <p v-else><i class="fa-solid fa-angle-left"></i></p>
   </div>
-  <h2>History</h2>
-  <div v-for="  vote_session   in   history  " :key="'vote_session' + vote_session.id" class="card">
-    <router-link :to="{ name: 'VoteSessionDetail', params: { id: vote_session.id } }">
-      <h3>
-        <i class="fa-solid fa-utensils"></i> {{ vote_session.name }}
-      </h3>
-    </router-link>
+  <div v-if="memberExpand" class="border-bottom">
+    <div v-for="member in members " :key="'member' + member.id" class="info">
+      <h4>
+        <i class="fa-solid fa-circle-user"></i> {{ member.username }}
+      </h4>
+    </div>
+  </div>
+  <div class="category" @click="toggleHistoryExpand">
+    <h4>Vote History</h4>
+    <p v-if="historyExpand"><i class="fa-solid fa-angle-down"></i></p>
+    <p v-else><i class="fa-solid fa-angle-left"></i></p>
+  </div>
+  <div v-if="historyExpand" class="border-bottom">
+    <div v-for="vote_session in history" :key="'vote_session' + vote_session.id" class="info">
+      <router-link :to="{ name: 'VoteSessionDetail', params: { id: vote_session.id } }">
+        <h4>
+          <i class="fa-solid fa-utensils"></i> {{ vote_session.name }}
+        </h4>
+      </router-link>
 
-    <h3>
-      {{ vote_session.restaurant?.name }}
-    </h3>
+      <h4>
+        {{ vote_session.restaurant?.name }}
+      </h4>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import { createConsumer } from '@rails/actioncable'
+import ButtonPrimary from '@/components/Shared/ButtonPrimary.vue'
+import ButtonSmall from '@/components/Shared/ButtonSmall.vue'
 
 export default {
   name: 'GroupDetails',
@@ -55,8 +82,14 @@ export default {
       history: [],
       selectedList: '',
       memberExpand: false,
+      historyExpand: false,
+      sessionFormShow: false,
       channel: null
     }
+  },
+  components: {
+    ButtonPrimary,
+    ButtonSmall
   },
   async mounted() {
     await this.fetchGroupDetails();
@@ -117,8 +150,94 @@ export default {
     },
     toggleMemberExpand() {
       this.memberExpand = !this.memberExpand
+    },
+    toggleHistoryExpand() {
+      this.historyExpand = !this.historyExpand
+    },
+    toggleNewSession() {
+      this.sessionFormShow = !this.sessionFormShow
     }
   }
 }
 
 </script>
+
+<style scoped lang="scss">
+.modal-background {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgb(0, 0, 0, 0.3);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  width: 80%;
+}
+
+.session-form {
+  background-color: $gray;
+  margin: 16px;
+  border-radius: 8px;
+}
+
+.heading {
+  margin: 16px;
+}
+
+.category {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: solid 1px $light-gray;
+}
+
+.border-bottom {
+  border-bottom: solid 1px $light-gray;
+}
+
+.info {
+  text-align: start;
+  margin: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+select {
+  width: 80%;
+  height: 36px;
+  font-size: 18px;
+  background-color: $light-gray;
+  font-family: inherit;
+  color: $text-primary;
+
+  &:focus {
+    border-color: $primary;
+  }
+}
+
+form {
+  div {
+    margin: 0px 0px 8px;
+  }
+}
+
+h2 {
+  margin: 16px 0px;
+}
+
+h4 {
+  margin: 8px 0px;
+}
+
+p {
+  margin: 8px 4px;
+}
+</style>

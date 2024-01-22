@@ -7,15 +7,15 @@
     <NoticeFlash :notice="notice" @dismissNotice="dismissNotice" />
   </div>
   <div v-if="isAlertVisible" class="flash-notification">
-    <AlertFlash :alert="alert" @dismissNotice="dismissAlert" />
+    <AlertFlash :alert="alert" @dismissAlert="dismissAlert" />
   </div>
   <NavBar />
 </template>
 
 <script>
 import axios from 'axios'
-import NavBar from './components/NavBar.vue'
-import HeaderBar from './components/HeaderBar.vue'
+import NavBar from './components/Shared/NavBar.vue'
+import HeaderBar from './components/Shared/HeaderBar.vue'
 import NoticeFlash from './components/NoticeFlash.vue'
 import AlertFlash from './components/AlertFlash.vue'
 
@@ -39,6 +39,9 @@ export default {
     showNotice(notice) {
       this.notice = notice;
       this.isNoticeVisible = true;
+      setTimeout(() => {
+        this.isNoticeVisible = false;
+      }, 15000);
     },
     dismissNotice() {
       this.isNoticeVisible = false;
@@ -67,18 +70,13 @@ export default {
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
 .container {
-  min-height: 89vh;
-  padding-top: 16px;
-  padding-bottom: 8vh;
+  // padding-top: 16px;
+  // padding-bottom: 8vh;
+  width: 80%;
+  // margin: 60px auto 50px;
+  margin: 80px auto 50px;
+  text-align: center;
 }
 
 .flash-notification {
